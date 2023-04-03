@@ -24,7 +24,10 @@ import {
   UbahStok,
   TampilPerubahan,
   TambahPerubahan,
-  UbahPerubahan
+  UbahPerubahan,
+  TampilSupplier,
+  TambahSupplier,
+  UbahSupplier
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -96,6 +99,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.perubahan) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const SUPPLIERRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.supplier) {
       return children;
     }
 
@@ -328,6 +341,39 @@ const App = () => {
               <PERUBAHANRoute>
                 <TambahPerubahan />
               </PERUBAHANRoute>
+            }
+          />
+          {/* Supplier */}
+          <Route
+            path="/supplier"
+            element={
+              <SUPPLIERRoute>
+                <TampilSupplier />
+              </SUPPLIERRoute>
+            }
+          />
+          <Route
+            path="/supplier/:id"
+            element={
+              <SUPPLIERRoute>
+                <TampilSupplier />
+              </SUPPLIERRoute>
+            }
+          />
+          <Route
+            path="/supplier/:id/edit"
+            element={
+              <SUPPLIERRoute>
+                <UbahSupplier />
+              </SUPPLIERRoute>
+            }
+          />
+          <Route
+            path="/supplier/tambahSupplier"
+            element={
+              <SUPPLIERRoute>
+                <TambahSupplier />
+              </SUPPLIERRoute>
             }
           />
         </Routes>

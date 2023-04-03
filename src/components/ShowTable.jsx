@@ -356,3 +356,100 @@ export function ShowTablePerubahan({ currentPosts, searchTerm }) {
     </TableContainer>
   );
 }
+
+export function ShowTableSupplier({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Kode
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Alamat
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Kota
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Telepon
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Npwp</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.kodeSupplier
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.namaSupplier
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.alamatSupplier
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.kotaSupplier
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.teleponSupplier
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.npwpSupplier
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/supplier/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.kodeSupplier}
+                </TableCell>
+                <TableCell>{user.namaSupplier}</TableCell>
+                <TableCell>{user.alamatSupplier}</TableCell>
+                <TableCell>{user.kotaSupplier}</TableCell>
+                <TableCell>{user.teleponSupplier}</TableCell>
+                <TableCell>{user.npwpSupplier}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

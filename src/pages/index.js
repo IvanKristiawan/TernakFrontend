@@ -25,3 +25,7 @@ export { default as UbahStok } from "./Master/Stok/Stok/UbahStok";
 export { default as TampilPerubahan } from "./Master/Perubahan/TampilPerubahan";
 export { default as TambahPerubahan } from "./Master/Perubahan/TambahPerubahan";
 export { default as UbahPerubahan } from "./Master/Perubahan/UbahPerubahan";
+// Supplier Page
+export { default as TampilSupplier } from "./Master/Supplier/TampilSupplier";
+export { default as TambahSupplier } from "./Master/Supplier/TambahSupplier";
+export { default as UbahSupplier } from "./Master/Supplier/UbahSupplier";
