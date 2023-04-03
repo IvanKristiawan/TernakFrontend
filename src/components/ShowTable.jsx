@@ -299,3 +299,60 @@ export function ShowTableStok({ currentPosts, searchTerm }) {
     </TableContainer>
   );
 }
+
+export function ShowTablePerubahan({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Kode
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Nama</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.kodePerubahan
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.namaPerubahan
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/perubahan/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.kodePerubahan}
+                </TableCell>
+                <TableCell>{user.namaPerubahan}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

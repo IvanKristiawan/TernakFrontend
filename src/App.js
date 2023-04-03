@@ -21,7 +21,10 @@ import {
   UbahGroupStok,
   TampilStok,
   TambahStok,
-  UbahStok
+  UbahStok,
+  TampilPerubahan,
+  TambahPerubahan,
+  UbahPerubahan
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -29,7 +32,6 @@ const App = () => {
   const { screenSize, setScreenSize } = useStateContext();
   const { user } = useContext(AuthContext);
   const [collapsed, setCollapsed] = useState(false);
-  const [image, setImage] = useState(false);
   const [toggled, setToggled] = useState(false);
 
   const handleCollapsedChange = () => {
@@ -84,6 +86,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.stok) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const PERUBAHANRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.perubahan) {
       return children;
     }
 
@@ -283,6 +295,39 @@ const App = () => {
               <STOKRoute>
                 <TambahStok />
               </STOKRoute>
+            }
+          />
+          {/* Perubahan */}
+          <Route
+            path="/perubahan"
+            element={
+              <PERUBAHANRoute>
+                <TampilPerubahan />
+              </PERUBAHANRoute>
+            }
+          />
+          <Route
+            path="/perubahan/:id"
+            element={
+              <PERUBAHANRoute>
+                <TampilPerubahan />
+              </PERUBAHANRoute>
+            }
+          />
+          <Route
+            path="/perubahan/:id/edit"
+            element={
+              <PERUBAHANRoute>
+                <UbahPerubahan />
+              </PERUBAHANRoute>
+            }
+          />
+          <Route
+            path="/perubahan/tambahPerubahan"
+            element={
+              <PERUBAHANRoute>
+                <TambahPerubahan />
+              </PERUBAHANRoute>
             }
           />
         </Routes>

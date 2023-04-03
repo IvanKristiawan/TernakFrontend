@@ -21,3 +21,7 @@ export { default as UbahGroupStok } from "./Master/Stok/GroupStok/UbahGroupStok"
 export { default as TampilStok } from "./Master/Stok/Stok/TampilStok";
 export { default as TambahStok } from "./Master/Stok/Stok/TambahStok";
 export { default as UbahStok } from "./Master/Stok/Stok/UbahStok";
+// Perubahan Page
+export { default as TampilPerubahan } from "./Master/Perubahan/TampilPerubahan";
+export { default as TambahPerubahan } from "./Master/Perubahan/TambahPerubahan";
+export { default as UbahPerubahan } from "./Master/Perubahan/UbahPerubahan";
