@@ -27,7 +27,10 @@ import {
   UbahPerubahan,
   TampilSupplier,
   TambahSupplier,
-  UbahSupplier
+  UbahSupplier,
+  TampilCustomer,
+  TambahCustomer,
+  UbahCustomer
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -109,6 +112,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.supplier) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const CUSTOMERRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.customer) {
       return children;
     }
 
@@ -374,6 +387,39 @@ const App = () => {
               <SUPPLIERRoute>
                 <TambahSupplier />
               </SUPPLIERRoute>
+            }
+          />
+          {/* Customer */}
+          <Route
+            path="/customer"
+            element={
+              <CUSTOMERRoute>
+                <TampilCustomer />
+              </CUSTOMERRoute>
+            }
+          />
+          <Route
+            path="/customer/:id"
+            element={
+              <CUSTOMERRoute>
+                <TampilCustomer />
+              </CUSTOMERRoute>
+            }
+          />
+          <Route
+            path="/customer/:id/edit"
+            element={
+              <CUSTOMERRoute>
+                <UbahCustomer />
+              </CUSTOMERRoute>
+            }
+          />
+          <Route
+            path="/customer/tambahCustomer"
+            element={
+              <CUSTOMERRoute>
+                <TambahCustomer />
+              </CUSTOMERRoute>
             }
           />
         </Routes>

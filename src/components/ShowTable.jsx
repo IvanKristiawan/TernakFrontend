@@ -453,3 +453,90 @@ export function ShowTableSupplier({ currentPosts, searchTerm }) {
     </TableContainer>
   );
 }
+
+export function ShowTableCustomer({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Kode
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Alamat
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Kota
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>No. Telp</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.kodeCustomer
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.namaCustomer
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.alamatCustomer
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.kotaCustomer
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.noTelpCustomer
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/customer/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.kodeCustomer}
+                </TableCell>
+                <TableCell>{user.namaCustomer}</TableCell>
+                <TableCell>{user.alamatCustomer}</TableCell>
+                <TableCell>{user.kotaCustomer}</TableCell>
+                <TableCell>{user.noTelpCustomer}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

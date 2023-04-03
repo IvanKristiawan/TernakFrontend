@@ -29,3 +29,7 @@ export { default as UbahPerubahan } from "./Master/Perubahan/UbahPerubahan";
 export { default as TampilSupplier } from "./Master/Supplier/TampilSupplier";
 export { default as TambahSupplier } from "./Master/Supplier/TambahSupplier";
 export { default as UbahSupplier } from "./Master/Supplier/UbahSupplier";
+// Customer Page
+export { default as TampilCustomer } from "./Master/Customer/TampilCustomer";
+export { default as TambahCustomer } from "./Master/Customer/TambahCustomer";
+export { default as UbahCustomer } from "./Master/Customer/UbahCustomer";
