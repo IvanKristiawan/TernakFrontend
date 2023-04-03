@@ -18,7 +18,10 @@ import {
   UbahCabang,
   TampilGroupStok,
   TambahGroupStok,
-  UbahGroupStok
+  UbahGroupStok,
+  TampilStok,
+  TambahStok,
+  UbahStok
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -246,6 +249,39 @@ const App = () => {
             element={
               <STOKRoute>
                 <TambahGroupStok />
+              </STOKRoute>
+            }
+          />
+          {/*  Stok */}
+          <Route
+            path="/stok"
+            element={
+              <STOKRoute>
+                <TampilStok />
+              </STOKRoute>
+            }
+          />
+          <Route
+            path="/stok/:id"
+            element={
+              <STOKRoute>
+                <TampilStok />
+              </STOKRoute>
+            }
+          />
+          <Route
+            path="/stok/:id/edit"
+            element={
+              <STOKRoute>
+                <UbahStok />
+              </STOKRoute>
+            }
+          />
+          <Route
+            path="/stok/tambahStok"
+            element={
+              <STOKRoute>
+                <TambahStok />
               </STOKRoute>
             }
           />

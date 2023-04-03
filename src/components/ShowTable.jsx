@@ -233,3 +233,69 @@ export function ShowTableGroupStok({ currentPosts, searchTerm }) {
     </TableContainer>
   );
 }
+
+export function ShowTableStok({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Qty.
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Group Stok</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.namaStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.qtyStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.groupstok.kodeGroupStok
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.groupstok.namaGroupStok
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/stok/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.namaStok}
+                </TableCell>
+                <TableCell align="right">{user.qtyStok}</TableCell>
+                <TableCell>{`${user.groupstok.kodeGroupStok} - ${user.groupstok.namaGroupStok}`}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

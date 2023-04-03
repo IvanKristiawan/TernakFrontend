@@ -17,3 +17,7 @@ export { default as UbahCabang } from "./Master/Cabang/UbahCabang";
 export { default as TampilGroupStok } from "./Master/Stok/GroupStok/TampilGroupStok";
 export { default as TambahGroupStok } from "./Master/Stok/GroupStok/TambahGroupStok";
 export { default as UbahGroupStok } from "./Master/Stok/GroupStok/UbahGroupStok";
+// Stok Page
+export { default as TampilStok } from "./Master/Stok/Stok/TampilStok";
+export { default as TambahStok } from "./Master/Stok/Stok/TambahStok";
+export { default as UbahStok } from "./Master/Stok/Stok/UbahStok";
