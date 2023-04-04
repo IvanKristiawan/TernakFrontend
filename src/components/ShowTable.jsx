@@ -540,3 +540,75 @@ export function ShowTableCustomer({ currentPosts, searchTerm }) {
     </TableContainer>
   );
 }
+
+export function ShowTableGantiPeriode({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Dari Tanggal
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Sampai Tanggal
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.namaPeriode
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.dariTanggal
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.sampaiTanggal
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/gantiPeriode/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.namaPeriode}
+                </TableCell>
+                <TableCell>{user.dariTanggal}</TableCell>
+                <TableCell>{user.sampaiTanggal}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

@@ -13,6 +13,8 @@ import {
   UbahUser,
   TampilSetting,
   UbahSetting,
+  TutupPeriode,
+  TampilGantiPeriode,
   TampilCabang,
   TambahCabang,
   UbahCabang,
@@ -72,6 +74,26 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.setting) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const TUTUPPERIODERoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.tutupPeriode) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const GANTIPERIODERoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.gantiPeriode) {
       return children;
     }
 
@@ -222,6 +244,31 @@ const App = () => {
               <SETTINGRoute>
                 <UbahSetting />
               </SETTINGRoute>
+            }
+          />
+          {/* Ganti Periode */}
+          <Route
+            path="/gantiPeriode"
+            element={
+              <GANTIPERIODERoute>
+                <TampilGantiPeriode />
+              </GANTIPERIODERoute>
+            }
+          />
+          <Route
+            path="/gantiPeriode/:id"
+            element={
+              <GANTIPERIODERoute>
+                <TampilGantiPeriode />
+              </GANTIPERIODERoute>
+            }
+          />
+          <Route
+            path="/tutupPeriode"
+            element={
+              <TUTUPPERIODERoute>
+                <TutupPeriode />
+              </TUTUPPERIODERoute>
             }
           />
           {/*  Cabang */}

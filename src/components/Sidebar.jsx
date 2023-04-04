@@ -158,6 +158,17 @@ const Sidebar = ({
                 Daftar User <NavLink to="/daftarUser" />
               </MenuItem>
             )}
+            {user.akses.tutupPeriode === true && (
+              <MenuItem>
+                Tutup Periode
+                <NavLink to="/tutupPeriode" />
+              </MenuItem>
+            )}
+            {user.akses.gantiPeriode === true && (
+              <MenuItem>
+                Ganti Periode <NavLink to="/gantiPeriode" />
+              </MenuItem>
+            )}
             {user.akses.setting === true && (
               <MenuItem>
                 Setting <NavLink to="/setting" />
