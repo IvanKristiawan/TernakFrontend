@@ -1,26 +1,27 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../../contexts/ContextProvider";
 import { Loader } from "../../../../components";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
 import { Box, Alert, Button, Snackbar, Typography } from "@mui/material";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import SaveIcon from "@mui/icons-material/Save";
 
-const UbahBeli = () => {
+const TambahJual = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [noNotaBeli, setNoNotaBeli] = useState("");
-  const [inputTanggalBeli, setInputTanggalBeli] = useState("");
-  const [kodeSupplier, setKodeSupplier] = useState("");
+  const [noNotaJual, setNoNotaJual] = useState("");
+  const [inputTanggalJual, setInputTanggalJual] = useState(
+    new Date(user.tutupperiode.dariTanggal)
+  );
 
-  const [suppliers, setSuppliers] = useState([]);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
   const handleClose = (event, reason) => {
@@ -31,40 +32,36 @@ const UbahBeli = () => {
   };
 
   useEffect(() => {
-    getSuppliersData();
-    getBeliById();
+    findDefaultDate();
+    getNextKodeJual();
   }, []);
 
-  const getSuppliersData = async (kodeUnit) => {
-    setKodeSupplier("");
-    const response = await axios.post(`${tempUrl}/suppliers`, {
-      _id: user.id,
-      token: user.token
-    });
-    setSuppliers(response.data);
-    setKodeSupplier(response.data[0].kodeSupplier);
+  const findDefaultDate = async () => {
+    let newPeriodeAwal = new Date(user.tutupperiode.dariTanggal);
+    let newPeriodeAkhir = new Date(user.tutupperiode.sampaiTanggal);
+    let newToday = new Date();
+
+    let isDateBetween =
+      newToday >= newPeriodeAwal && newToday <= newPeriodeAkhir;
+
+    if (isDateBetween) {
+      // Default Date Today
+      setInputTanggalJual(new Date());
+    }
   };
 
-  const getBeliById = async () => {
+  const getNextKodeJual = async () => {
     setLoading(true);
-    const pickedBeli = await axios.post(`${tempUrl}/belis/${id}`, {
+    const nextKodeJual = await axios.post(`${tempUrl}/jualNextKode`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
+      kodeCabang: user.cabang.id
     });
-    setNoNotaBeli(pickedBeli.data.noNotaBeli);
-    let newTanggalBeli = new Date(pickedBeli.data.tanggalBeli);
-    let tempTanggalBeli = `${newTanggalBeli.getDate().toLocaleString("en-US", {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    })}-${(newTanggalBeli.getMonth() + 1).toLocaleString("en-US", {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    })}-${newTanggalBeli.getFullYear()}`;
-    setInputTanggalBeli(tempTanggalBeli);
+    setNoNotaJual(nextKodeJual.data);
     setLoading(false);
   };
 
-  const updateBeli = async (e) => {
+  const saveJual = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
@@ -72,14 +69,15 @@ const UbahBeli = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/updateBeli/${id}`, {
-          kodeSupplier,
-          userIdUpdate: user.id,
+        await axios.post(`${tempUrl}/saveJual`, {
+          tanggalJual: inputTanggalJual,
+          userIdInput: user.id,
+          kodeCabang: user.cabang.id,
           _id: user.id,
           token: user.token
         });
         setLoading(false);
-        navigate(`/daftarBeli/beli/${id}`);
+        navigate("/daftarJual");
       } catch (error) {
         alert(error);
       }
@@ -102,15 +100,15 @@ const UbahBeli = () => {
   return (
     <Container>
       <h3>Transaksi</h3>
-      <h5 style={{ fontWeight: 400 }}>Ubah Beli</h5>
+      <h5 style={{ fontWeight: 400 }}>Tambah Jual</h5>
       <Typography sx={subTitleText}>
         Periode : {user.tutupperiode.namaPeriode}
       </Typography>
       <hr />
       <Card>
-        <Card.Header>Beli</Card.Header>
+        <Card.Header>Jual</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={updateBeli}>
+          <Form noValidate validated={validated} onSubmit={saveJual}>
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -124,7 +122,7 @@ const UbahBeli = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={noNotaBeli}
+                      value={noNotaJual}
                       disabled
                       readOnly
                     />
@@ -143,40 +141,15 @@ const UbahBeli = () => {
                     Tanggal :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control
+                    <DatePicker
                       required
-                      value={inputTanggalBeli}
-                      disabled
-                      readOnly
+                      dateFormat="dd/MM/yyyy"
+                      selected={inputTanggalJual}
+                      minDate={new Date(user.tutupperiode.dariTanggal)}
+                      maxDate={new Date(user.tutupperiode.sampaiTanggal)}
+                      customInput={<Form.Control required />}
+                      onChange={(date) => setInputTanggalJual(date)}
                     />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
-                    Supplier :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Select
-                      required
-                      value={kodeSupplier}
-                      onChange={(e) => {
-                        setKodeSupplier(e.target.value);
-                      }}
-                    >
-                      {suppliers.map((supplier, index) => (
-                        <option value={supplier.kodeSupplier}>
-                          {supplier.kodeSupplier} - {supplier.namaSupplier}
-                        </option>
-                      ))}
-                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
@@ -185,7 +158,7 @@ const UbahBeli = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate(`/daftarBeli/beli/${id}`)}
+                onClick={() => navigate("/daftarJual")}
                 sx={{ marginRight: 2 }}
               >
                 {"< Kembali"}
@@ -212,7 +185,7 @@ const UbahBeli = () => {
   );
 };
 
-export default UbahBeli;
+export default TambahJual;
 
 const spacingTop = {
   mt: 4
@@ -224,16 +197,4 @@ const alertBox = {
 
 const subTitleText = {
   fontWeight: "900"
-};
-
-const dialogContainer = {
-  display: "flex",
-  flexDirection: "column",
-  padding: 4,
-  width: "800px"
-};
-
-const dialogWrapper = {
-  width: "100%",
-  marginTop: 2
 };

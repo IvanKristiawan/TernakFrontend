@@ -116,7 +116,7 @@ const Sidebar = ({
             )}
             {user.akses.penjualan === true && (
               <MenuItem>
-                Penjualan <NavLink to="/penjualan" />
+                Penjualan <NavLink to="/daftarJual" />
               </MenuItem>
             )}
           </SubMenu>

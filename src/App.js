@@ -39,7 +39,14 @@ import {
   UbahBeli,
   TambahBeliChild,
   TampilBeliChild,
-  UbahBeliChild
+  UbahBeliChild,
+  TampilDaftarJual,
+  TambahJual,
+  TampilJual,
+  UbahJual,
+  TambahJualChild,
+  TampilJualChild,
+  UbahJualChild
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -161,6 +168,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.pembelian) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const JUALRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.penjualan) {
       return children;
     }
 
@@ -542,6 +559,63 @@ const App = () => {
               <BELIRoute>
                 <UbahBeliChild />
               </BELIRoute>
+            }
+          />
+          {/* Jual */}
+          <Route
+            path="/daftarJual"
+            element={
+              <JUALRoute>
+                <TampilDaftarJual />
+              </JUALRoute>
+            }
+          />
+          <Route
+            path="/daftarJual/jual/tambahJual"
+            element={
+              <JUALRoute>
+                <TambahJual />
+              </JUALRoute>
+            }
+          />
+          <Route
+            path="/daftarJual/jual/:id"
+            element={
+              <JUALRoute>
+                <TampilJual />
+              </JUALRoute>
+            }
+          />
+          <Route
+            path="/daftarJual/jual/:id/edit"
+            element={
+              <JUALRoute>
+                <UbahJual />
+              </JUALRoute>
+            }
+          />
+          <Route
+            path="/daftarJual/jual/:id/tambahJualChild"
+            element={
+              <JUALRoute>
+                <TambahJualChild />
+              </JUALRoute>
+            }
+          />
+          <Route
+            path="/daftarJual/jual/:id/:idJualChild"
+            element={
+              <JUALRoute>
+                <TampilJualChild />
+              </JUALRoute>
+            }
+          />
+          <Route
+            path="/daftarJual/jual/:id/:idJualChild/edit"
+            element={
+              <JUALRoute>
+                <UbahJualChild />
+              </JUALRoute>
             }
           />
         </Routes>

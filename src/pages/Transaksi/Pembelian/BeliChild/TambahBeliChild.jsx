@@ -117,7 +117,7 @@ const TambahBeliChild = () => {
 
   return (
     <Container>
-      <h3>Finance</h3>
+      <h3>Transaksi</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Detail Beli</h5>
       <Typography sx={subTitleText}>
         Periode : {user.tutupperiode.namaPeriode}

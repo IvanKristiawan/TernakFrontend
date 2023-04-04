@@ -18,19 +18,19 @@ import {
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 
-const TampilBeliChild = () => {
+const TampilJualChild = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
-  const { id, idBeliChild } = useParams();
-  const [tempIdBeliChild, setTempIdBeliChild] = useState("");
-  const [noNotaBeli, setNoNotaBeli] = useState("");
+  const { id, idJualChild } = useParams();
+  const [tempIdJualChild, setTempIdJualChild] = useState("");
+  const [noNotaJual, setNoNotaJual] = useState("");
   const [kodeStok, setKodeStok] = useState("");
   const [stok, setStok] = useState("");
-  const [tanggalBeli, setTanggalBeli] = useState("");
-  const [tanggalBeliDate, setTanggalBeliDate] = useState("");
-  const [qtyBeliChild, setQtyBeliChild] = useState("");
-  const [hargaBeliChild, setHargaBeliChild] = useState("");
-  const [subtotalBeliChild, setSubtotalBeliChild] = useState("");
+  const [tanggalJual, setTanggalJual] = useState("");
+  const [tanggalJualDate, setTanggalJualDate] = useState("");
+  const [qtyJualChild, setQtyJualChild] = useState("");
+  const [hargaJualChild, setHargaJualChild] = useState("");
+  const [subtotalJualChild, setSubtotalJualChild] = useState("");
   const [isPost, setIsPost] = useState("");
 
   const navigate = useNavigate();
@@ -40,9 +40,9 @@ const TampilBeliChild = () => {
   let isEditableManager = user.tipeUser !== "ADMIN" && isPost === false;
   let isEditableAdmin =
     user.tipeUser === "ADMIN" &&
-    tanggalBeliDate?.getFullYear() === today.getFullYear() &&
-    tanggalBeliDate?.getMonth() === today.getMonth() &&
-    tanggalBeliDate?.getDate() === today.getDate() &&
+    tanggalJualDate?.getFullYear() === today.getFullYear() &&
+    tanggalJualDate?.getMonth() === today.getMonth() &&
+    tanggalJualDate?.getDate() === today.getDate() &&
     isPost === false;
   let isEditable = isEditableManager || isEditableAdmin;
 
@@ -55,55 +55,55 @@ const TampilBeliChild = () => {
   };
 
   useEffect(() => {
-    getBeliChildById();
+    getJualChildById();
   }, []);
 
-  const getBeliChildById = async () => {
+  const getJualChildById = async () => {
     if (id) {
       const response = await axios.post(
-        `${tempUrl}/belisChild/${idBeliChild}`,
+        `${tempUrl}/jualsChild/${idJualChild}`,
         {
           _id: user.id,
           token: user.token
         }
       );
-      setTempIdBeliChild(response.data.id);
-      setNoNotaBeli(response.data.beli.noNotaBeli);
+      setTempIdJualChild(response.data.id);
+      setNoNotaJual(response.data.jual.noNotaJual);
       setKodeStok(response.data.stok.kodeStok);
       setStok(
         `${response.data.stok.kodeStok} - ${response.data.stok.namaStok}`
       );
-      let newTglBeli = new Date(response.data.tanggalBeli);
-      let tempTglBeli = `${newTglBeli.getDate().toLocaleString("en-US", {
+      let newTglJual = new Date(response.data.tanggalJual);
+      let tempTglJual = `${newTglJual.getDate().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
         useGrouping: false
-      })}-${(newTglBeli.getMonth() + 1).toLocaleString("en-US", {
+      })}-${(newTglJual.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
         useGrouping: false
-      })}-${newTglBeli.getFullYear()}`;
-      setTanggalBeli(tempTglBeli);
-      setTanggalBeliDate(response.data.tanggalBeli);
+      })}-${newTglJual.getFullYear()}`;
+      setTanggalJual(tempTglJual);
+      setTanggalJualDate(response.data.tanggalJual);
       setIsPost(response.data.isPost);
-      setQtyBeliChild(response.data.qtyBeliChild);
-      setHargaBeliChild(response.data.hargaBeliChild);
-      setSubtotalBeliChild(response.data.subtotalBeliChild);
+      setQtyJualChild(response.data.qtyJualChild);
+      setHargaJualChild(response.data.hargaJualChild);
+      setSubtotalJualChild(response.data.subtotalJualChild);
     }
   };
 
-  const deleteBeliChild = async (id) => {
+  const deleteJualChild = async (id) => {
     try {
       setLoading(true);
-      // Delete Beli Child
-      await axios.post(`${tempUrl}/deleteBeliChild/${tempIdBeliChild}`, {
+      // Delete Jual Child
+      await axios.post(`${tempUrl}/deleteJualChild/${tempIdJualChild}`, {
         kodeStok,
-        beliId: id,
-        qtyBeliChild,
-        subtotalBeliChild,
+        jualId: id,
+        qtyJualChild,
+        subtotalJualChild,
         _id: user.id,
         token: user.token
       });
       setLoading(false);
-      navigate(`/daftarBeli/beli/${id}`);
+      navigate(`/daftarJual/jual/${id}`);
     } catch (error) {
       alert(error);
     }
@@ -120,11 +120,11 @@ const TampilBeliChild = () => {
   return (
     <Container>
       <h3>Transaksi</h3>
-      <h5 style={{ fontWeight: 400 }}>Detail Beli</h5>
+      <h5 style={{ fontWeight: 400 }}>Detail Jual</h5>
       <Button
         variant="outlined"
         color="secondary"
-        onClick={() => navigate(`/daftarBeli/beli/${id}`)}
+        onClick={() => navigate(`/daftarJual/jual/${id}`)}
         sx={{ marginLeft: 2, marginTop: 4 }}
       >
         {"< Kembali"}
@@ -143,7 +143,7 @@ const TampilBeliChild = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => deleteBeliChild(id)}>Ok</Button>
+            <Button onClick={() => deleteJualChild(id)}>Ok</Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
         </Dialog>
@@ -154,7 +154,7 @@ const TampilBeliChild = () => {
               startIcon={<EditIcon />}
               sx={{ textTransform: "none" }}
               onClick={() => {
-                navigate(`/daftarBeli/beli/${id}/${idBeliChild}/edit`);
+                navigate(`/daftarJual/jual/${id}/${idJualChild}/edit`);
               }}
             >
               Ubah
@@ -173,7 +173,7 @@ const TampilBeliChild = () => {
       </Box>
       <hr />
       <Card>
-        <Card.Header>Detail Beli</Card.Header>
+        <Card.Header>Detail Jual</Card.Header>
         <Card.Body>
           <Form>
             <Row>
@@ -189,7 +189,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={noNotaBeli}
+                      value={noNotaJual}
                       disabled
                       readOnly
                     />
@@ -210,7 +210,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={tanggalBeli}
+                      value={tanggalJual}
                       disabled
                       readOnly
                     />
@@ -247,7 +247,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={tanggalBeli}
+                      value={tanggalJual}
                       disabled
                       readOnly
                     />
@@ -268,7 +268,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={qtyBeliChild.toLocaleString()}
+                      value={qtyJualChild.toLocaleString()}
                       disabled
                       readOnly
                     />
@@ -289,7 +289,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={hargaBeliChild.toLocaleString()}
+                      value={hargaJualChild.toLocaleString()}
                       disabled
                       readOnly
                     />
@@ -310,7 +310,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={subtotalBeliChild.toLocaleString()}
+                      value={subtotalJualChild.toLocaleString()}
                       disabled
                       readOnly
                     />
@@ -325,7 +325,7 @@ const TampilBeliChild = () => {
   );
 };
 
-export default TampilBeliChild;
+export default TampilJualChild;
 
 const deleteButtonContainer = {
   mt: 4,

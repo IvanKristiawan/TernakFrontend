@@ -44,3 +44,11 @@ export { default as UbahBeli } from "./Transaksi/Pembelian/Beli/UbahBeli";
 export { default as TambahBeliChild } from "./Transaksi/Pembelian/BeliChild/TambahBeliChild";
 export { default as TampilBeliChild } from "./Transaksi/Pembelian/BeliChild/TampilBeliChild";
 export { default as UbahBeliChild } from "./Transaksi/Pembelian/BeliChild/UbahBeliChild";
+// Transaksi Jual
+export { default as TampilDaftarJual } from "./Transaksi/Penjualan/Jual/TampilDaftarJual";
+export { default as TambahJual } from "./Transaksi/Penjualan/Jual/TambahJual";
+export { default as TampilJual } from "./Transaksi/Penjualan/Jual/TampilJual";
+export { default as UbahJual } from "./Transaksi/Penjualan/Jual/UbahJual";
+export { default as TambahJualChild } from "./Transaksi/Penjualan/JualChild/TambahJualChild";
+export { default as TampilJualChild } from "./Transaksi/Penjualan/JualChild/TampilJualChild";
+export { default as UbahJualChild } from "./Transaksi/Penjualan/JualChild/UbahJualChild";

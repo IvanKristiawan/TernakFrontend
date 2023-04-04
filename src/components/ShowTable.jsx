@@ -749,3 +749,132 @@ export function ShowTableBeliChild({ id, currentPosts }) {
     </TableContainer>
   );
 }
+
+export function ShowTableDaftarJual({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              No. Nota
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Tgl. Jual
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.noNotaJual
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.tanggalJual.toString().includes(searchTerm) ||
+                val.totalJual == searchTerm
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/daftarJual/jual/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.noNotaJual}
+                </TableCell>
+                <TableCell>{user.tanggalJual}</TableCell>
+                <TableCell align="right">
+                  {user.totalJual.toLocaleString()}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableJualChild({ id, currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Stok
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Qty.
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Harga
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Subtotal</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts.map((user, index) => {
+            return (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/daftarJual/jual/${id}/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {`${user.stok.kodeStok} - ${user.stok.namaStok}`}
+                </TableCell>
+                <TableCell align="right">
+                  {user.qtyJualChild.toLocaleString()}
+                </TableCell>
+                <TableCell align="right">
+                  {user.hargaJualChild.toLocaleString()}
+                </TableCell>
+                <TableCell align="right">
+                  {user.subtotalJualChild.toLocaleString()}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

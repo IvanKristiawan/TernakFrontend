@@ -8,22 +8,22 @@ import { Container, Card, Form, Row, Col } from "react-bootstrap";
 import { Box, Alert, Button, Snackbar, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
-const UbahBeliChild = () => {
+const UbahJualChild = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
-  const { id, idBeliChild } = useParams();
+  const { id, idJualChild } = useParams();
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [noNotaBeli, setNoNotaBeli] = useState("");
+  const [noNotaJual, setNoNotaJual] = useState("");
   const [stok, setStok] = useState("");
   const [kodeStok, setKodeStok] = useState("");
-  const [tanggalBeli, setTanggalBeli] = useState("");
-  const [qtyBeliChild, setQtyBeliChild] = useState("");
-  const [qtyBeliChildBaru, setQtyBeliChildBaru] = useState("");
-  const [hargaBeliChild, setHargaBeliChild] = useState("");
-  const [hargaBeliChildBaru, setHargaBeliChildBaru] = useState("");
-  const [subtotalBeliChild, setSubtotalBeliChild] = useState("");
-  const [subtotalBeliChildBaru, setSubtotalBeliChildBaru] = useState("");
+  const [tanggalJual, setTanggalJual] = useState("");
+  const [qtyJualChild, setQtyJualChild] = useState("");
+  const [qtyJualChildBaru, setQtyJualChildBaru] = useState("");
+  const [hargaJualChild, setHargaJualChild] = useState("");
+  const [hargaJualChildBaru, setHargaJualChildBaru] = useState("");
+  const [subtotalJualChild, setSubtotalJualChild] = useState("");
+  const [subtotalJualChildBaru, setSubtotalJualChildBaru] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -37,44 +37,44 @@ const UbahBeliChild = () => {
   };
 
   useEffect(() => {
-    getBeliChildById();
+    getJualChildById();
   }, []);
 
-  const getBeliChildById = async () => {
+  const getJualChildById = async () => {
     setLoading(true);
-    const pickedBeliChild = await axios.post(
-      `${tempUrl}/belisChild/${idBeliChild}`,
+    const pickedJualChild = await axios.post(
+      `${tempUrl}/jualsChild/${idJualChild}`,
       {
         _id: user.id,
         token: user.token
       }
     );
-    setNoNotaBeli(pickedBeliChild.data.beli.noNotaBeli);
+    setNoNotaJual(pickedJualChild.data.jual.noNotaJual);
     setStok(
-      `${pickedBeliChild.data.stok.kodeStok} - ${pickedBeliChild.data.stok.namaStok}`
+      `${pickedJualChild.data.stok.kodeStok} - ${pickedJualChild.data.stok.namaStok}`
     );
-    setKodeStok(pickedBeliChild.data.stok.kodeStok);
-    let newTanggalBeli = new Date(pickedBeliChild.data.beli.tanggalBeli);
-    let tempTanggalBeli = `${newTanggalBeli.getDate().toLocaleString("en-US", {
+    setKodeStok(pickedJualChild.data.stok.kodeStok);
+    let newTanggalJual = new Date(pickedJualChild.data.jual.tanggalJual);
+    let tempTanggalJual = `${newTanggalJual.getDate().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
       useGrouping: false
-    })}-${(newTanggalBeli.getMonth() + 1).toLocaleString("en-US", {
+    })}-${(newTanggalJual.getMonth() + 1).toLocaleString("en-US", {
       minimumIntegerDigits: 2,
       useGrouping: false
-    })}-${newTanggalBeli.getFullYear()}`;
-    setTanggalBeli(tempTanggalBeli);
-    setQtyBeliChild(pickedBeliChild.data.qtyBeliChild);
-    setQtyBeliChildBaru(pickedBeliChild.data.qtyBeliChild.toLocaleString());
-    setHargaBeliChild(pickedBeliChild.data.hargaBeliChild);
-    setHargaBeliChildBaru(pickedBeliChild.data.hargaBeliChild.toLocaleString());
-    setSubtotalBeliChild(pickedBeliChild.data.subtotalBeliChild);
-    setSubtotalBeliChildBaru(
-      pickedBeliChild.data.subtotalBeliChild.toLocaleString()
+    })}-${newTanggalJual.getFullYear()}`;
+    setTanggalJual(tempTanggalJual);
+    setQtyJualChild(pickedJualChild.data.qtyJualChild);
+    setQtyJualChildBaru(pickedJualChild.data.qtyJualChild.toLocaleString());
+    setHargaJualChild(pickedJualChild.data.hargaJualChild);
+    setHargaJualChildBaru(pickedJualChild.data.hargaJualChild.toLocaleString());
+    setSubtotalJualChild(pickedJualChild.data.subtotalJualChild);
+    setSubtotalJualChildBaru(
+      pickedJualChild.data.subtotalJualChild.toLocaleString()
     );
     setLoading(false);
   };
 
-  const updateBeliChild = async (e) => {
+  const updateJualChild = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
@@ -82,21 +82,21 @@ const UbahBeliChild = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/updateBeliChild/${idBeliChild}`, {
-          beliId: id,
+        await axios.post(`${tempUrl}/updateJualChild/${idJualChild}`, {
+          jualId: id,
           kodeStok,
-          qtyBeliChildLama: qtyBeliChild,
-          qtyBeliChild: qtyBeliChildBaru.replace(/,/g, ""),
-          subtotalBeliChildLama: subtotalBeliChild,
-          subtotalBeliChild: subtotalBeliChildBaru.replace(/,/g, ""),
-          hargaBeliChild: hargaBeliChildBaru.replace(/,/g, ""),
+          qtyJualChildLama: qtyJualChild,
+          qtyJualChild: qtyJualChildBaru.replace(/,/g, ""),
+          subtotalJualChildLama: subtotalJualChild,
+          subtotalJualChild: subtotalJualChildBaru.replace(/,/g, ""),
+          hargaJualChild: hargaJualChildBaru.replace(/,/g, ""),
           userIdUpdate: user.id,
           kodeCabang: user.cabang.id,
           _id: user.id,
           token: user.token
         });
         setLoading(false);
-        navigate(`/daftarBeli/beli/${id}`);
+        navigate(`/daftarJual/jual/${id}`);
       } catch (error) {
         alert(error);
       }
@@ -119,15 +119,15 @@ const UbahBeliChild = () => {
   return (
     <Container>
       <h3>Transaksi</h3>
-      <h5 style={{ fontWeight: 400 }}>Ubah Detail Beli</h5>
+      <h5 style={{ fontWeight: 400 }}>Ubah Detail Jual</h5>
       <Typography sx={subTitleText}>
         Periode : {user.tutupperiode.namaPeriode}
       </Typography>
       <hr />
       <Card>
-        <Card.Header>Detail Beli</Card.Header>
+        <Card.Header>Detail Jual</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={updateBeliChild}>
+          <Form noValidate validated={validated} onSubmit={updateJualChild}>
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -141,7 +141,7 @@ const UbahBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={noNotaBeli}
+                      value={noNotaJual}
                       disabled
                       readOnly
                     />
@@ -162,7 +162,7 @@ const UbahBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={tanggalBeli}
+                      value={tanggalJual}
                       disabled
                       readOnly
                     />
@@ -199,7 +199,7 @@ const UbahBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={qtyBeliChildBaru}
+                      value={qtyJualChildBaru}
                       onChange={(e) => {
                         let tempNum;
                         let isNumNan = isNaN(
@@ -213,11 +213,11 @@ const UbahBeliChild = () => {
                             10
                           ).toLocaleString();
                         }
-                        setQtyBeliChildBaru(tempNum);
-                        setSubtotalBeliChildBaru(
+                        setQtyJualChildBaru(tempNum);
+                        setSubtotalJualChildBaru(
                           (
                             tempNum.replace(/,/g, "") *
-                            hargaBeliChildBaru.replace(/,/g, "")
+                            hargaJualChildBaru.replace(/,/g, "")
                           ).toLocaleString()
                         );
                       }}
@@ -239,7 +239,7 @@ const UbahBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={hargaBeliChildBaru}
+                      value={hargaJualChildBaru}
                       onChange={(e) => {
                         let tempNum;
                         let isNumNan = isNaN(
@@ -253,11 +253,11 @@ const UbahBeliChild = () => {
                             10
                           ).toLocaleString();
                         }
-                        setHargaBeliChildBaru(tempNum);
-                        setSubtotalBeliChildBaru(
+                        setHargaJualChildBaru(tempNum);
+                        setSubtotalJualChildBaru(
                           (
                             tempNum.replace(/,/g, "") *
-                            qtyBeliChildBaru.replace(/,/g, "")
+                            qtyJualChildBaru.replace(/,/g, "")
                           ).toLocaleString()
                         );
                       }}
@@ -279,7 +279,7 @@ const UbahBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={subtotalBeliChildBaru}
+                      value={subtotalJualChildBaru}
                       disabled
                       readOnly
                     />
@@ -292,7 +292,7 @@ const UbahBeliChild = () => {
                 variant="outlined"
                 color="secondary"
                 onClick={() =>
-                  navigate(`/daftarBeli/beli/${id}/${idBeliChild}`)
+                  navigate(`/daftarJual/jual/${id}/${idJualChild}`)
                 }
                 sx={{ marginRight: 2 }}
               >
@@ -320,7 +320,7 @@ const UbahBeliChild = () => {
   );
 };
 
-export default UbahBeliChild;
+export default UbahJualChild;
 
 const spacingTop = {
   mt: 4
