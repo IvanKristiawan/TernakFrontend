@@ -28,6 +28,7 @@ const TampilStok = () => {
   const { screenSize } = useStateContext();
 
   const [isFetchError, setIsFetchError] = useState(false);
+  const [kodeStok, setKodeStok] = useState("");
   const [namaStok, setNamaStok] = useState("");
   const [qtyStok, setQtyStok] = useState("");
   const [groupStok, setGroupStok] = useState("");
@@ -49,6 +50,7 @@ const TampilStok = () => {
     if (searchTerm === "") {
       return val;
     } else if (
+      val.kodeStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
       val.namaStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
       val.qtyStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
       val.groupstok.kodeGroupStok
@@ -96,6 +98,7 @@ const TampilStok = () => {
         _id: user.id,
         token: user.token
       });
+      setKodeStok(response.data.kodeStok);
       setNamaStok(response.data.namaStok);
       setQtyStok(response.data.qtyStok);
       setGroupStok(
@@ -117,7 +120,7 @@ const TampilStok = () => {
       navigate("/stok");
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
-        alert(`${namaStok} tidak bisa dihapus karena sudah ada data!`);
+        alert(`${kodeStok} tidak bisa dihapus karena sudah ada data!`);
       }
     }
     setLoading(false);
@@ -233,6 +236,7 @@ const TampilStok = () => {
           <table class="table" id="table">
             <thead>
               <tr>
+                <th>Kode</th>
                 <th>Nama</th>
                 <th>Kuantitas</th>
                 <th>Group Stok</th>
@@ -241,6 +245,7 @@ const TampilStok = () => {
             <tbody>
               {stoks.map((user, index) => (
                 <tr key={user.id}>
+                  <td>{user.kodeStok}</td>
                   <td>{user.namaStok}</td>
                   <td>{user.qtyStok}</td>
                   <td>{`${user.groupstok.kodeGroupStok} - ${user.groupstok.namaGroupStok}`}</td>
@@ -264,12 +269,14 @@ const TampilStok = () => {
           {previewExcel && (
             <tbody>
               <tr>
+                <th>Kode</th>
                 <th>Nama</th>
                 <th>Kuantitas</th>
                 <th>Group Stok</th>
               </tr>
               {stoks.map((user, index) => (
                 <tr key={user.id}>
+                  <td>{user.kodeStok}</td>
                   <td>{user.namaStok}</td>
                   <td>{user.qtyStok}</td>
                   <td>{`${user.groupstok.kodeGroupStok} - ${user.groupstok.namaGroupStok}`}</td>
@@ -293,6 +300,22 @@ const TampilStok = () => {
         <Container>
           <hr />
           <Form>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Kode :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={kodeStok} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
             <Row>
               <Col sm={6}>
                 <Form.Group

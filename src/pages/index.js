@@ -36,3 +36,11 @@ export { default as UbahSupplier } from "./Master/Supplier/UbahSupplier";
 export { default as TampilCustomer } from "./Master/Customer/TampilCustomer";
 export { default as TambahCustomer } from "./Master/Customer/TambahCustomer";
 export { default as UbahCustomer } from "./Master/Customer/UbahCustomer";
+// Transaksi Beli
+export { default as TampilDaftarBeli } from "./Transaksi/Pembelian/Beli/TampilDaftarBeli";
+export { default as TambahBeli } from "./Transaksi/Pembelian/Beli/TambahBeli";
+export { default as TampilBeli } from "./Transaksi/Pembelian/Beli/TampilBeli";
+export { default as UbahBeli } from "./Transaksi/Pembelian/Beli/UbahBeli";
+export { default as TambahBeliChild } from "./Transaksi/Pembelian/BeliChild/TambahBeliChild";
+export { default as TampilBeliChild } from "./Transaksi/Pembelian/BeliChild/TampilBeliChild";
+export { default as UbahBeliChild } from "./Transaksi/Pembelian/BeliChild/UbahBeliChild";

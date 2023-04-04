@@ -13,8 +13,9 @@ const UbahStok = () => {
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [kodeStok, setKodeStok] = useState("");
+  const [kodeStokLama, setKodeStokLama] = useState("");
   const [namaStok, setNamaStok] = useState("");
-  const [namaStokLama, setNamaStokLama] = useState("");
   const [qtyStok, setQtyStok] = useState("");
   const [kodeGroupStok, setKodeGroupStok] = useState("");
 
@@ -42,8 +43,9 @@ const UbahStok = () => {
       _id: user.id,
       token: user.token
     });
+    setKodeStok(response.data.kodeStok);
+    setKodeStokLama(response.data.kodeStok);
     setNamaStok(response.data.namaStok);
-    setNamaStokLama(response.data.namaStok);
     setQtyStok(response.data.qtyStok.toLocaleString());
     setKodeGroupStok(response.data.groupstok.kodeGroupStok);
     setLoading(false);
@@ -68,8 +70,9 @@ const UbahStok = () => {
         try {
           setLoading(true);
           await axios.post(`${tempUrl}/updateStok/${id}`, {
+            kodeStok,
+            kodeStokLama,
             namaStok,
-            namaStokLama,
             qtyStok: qtyStok.replace(/,/g, ""),
             kodeGroupStok,
             userIdUpdate: user.id,
@@ -115,6 +118,28 @@ const UbahStok = () => {
         <Card.Header>Stok</Card.Header>
         <Card.Body>
           <Form noValidate validated={validated} onSubmit={updateStok}>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Kode :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control
+                      required
+                      value={kodeStok}
+                      onChange={(e) =>
+                        setKodeStok(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
             <Row>
               <Col sm={6}>
                 <Form.Group

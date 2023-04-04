@@ -246,6 +246,12 @@ export function ShowTableStok({ currentPosts, searchTerm }) {
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
+              Kode
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama
             </TableCell>
             <TableCell
@@ -263,6 +269,7 @@ export function ShowTableStok({ currentPosts, searchTerm }) {
               if (searchTerm === "") {
                 return val;
               } else if (
+                val.kodeStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
                 val.namaStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
                 val.qtyStok.toUpperCase().includes(searchTerm.toUpperCase()) ||
                 val.groupstok.kodeGroupStok
@@ -288,8 +295,9 @@ export function ShowTableStok({ currentPosts, searchTerm }) {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {user.namaStok}
+                  {user.kodeStok}
                 </TableCell>
+                <TableCell>{user.namaStok}</TableCell>
                 <TableCell align="right">{user.qtyStok}</TableCell>
                 <TableCell>{`${user.groupstok.kodeGroupStok} - ${user.groupstok.namaGroupStok}`}</TableCell>
               </TableRow>
@@ -607,6 +615,135 @@ export function ShowTableGantiPeriode({ currentPosts, searchTerm }) {
                 <TableCell>{user.sampaiTanggal}</TableCell>
               </TableRow>
             ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableDaftarBeli({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              No. Nota
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Tgl. Beli
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.noNotaBeli
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.tanggalBeli.toString().includes(searchTerm) ||
+                val.totalBeli == searchTerm
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/daftarBeli/beli/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.noNotaBeli}
+                </TableCell>
+                <TableCell>{user.tanggalBeli}</TableCell>
+                <TableCell align="right">
+                  {user.totalBeli.toLocaleString()}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableBeliChild({ id, currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Stok
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Qty.
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Harga
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Subtotal</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts.map((user, index) => {
+            return (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/daftarBeli/beli/${id}/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {`${user.stok.kodeStok} - ${user.stok.namaStok}`}
+                </TableCell>
+                <TableCell align="right">
+                  {user.qtyBeliChild.toLocaleString()}
+                </TableCell>
+                <TableCell align="right">
+                  {user.hargaBeliChild.toLocaleString()}
+                </TableCell>
+                <TableCell align="right">
+                  {user.subtotalBeliChild.toLocaleString()}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

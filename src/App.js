@@ -32,7 +32,14 @@ import {
   UbahSupplier,
   TampilCustomer,
   TambahCustomer,
-  UbahCustomer
+  UbahCustomer,
+  TampilDaftarBeli,
+  TambahBeli,
+  TampilBeli,
+  UbahBeli,
+  TambahBeliChild,
+  TampilBeliChild,
+  UbahBeliChild
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -144,6 +151,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.customer) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const BELIRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.pembelian) {
       return children;
     }
 
@@ -467,6 +484,64 @@ const App = () => {
               <CUSTOMERRoute>
                 <TambahCustomer />
               </CUSTOMERRoute>
+            }
+          />
+          {/* TRANSAKSI */}
+          {/* Beli */}
+          <Route
+            path="/daftarBeli"
+            element={
+              <BELIRoute>
+                <TampilDaftarBeli />
+              </BELIRoute>
+            }
+          />
+          <Route
+            path="/daftarBeli/beli/tambahBeli"
+            element={
+              <BELIRoute>
+                <TambahBeli />
+              </BELIRoute>
+            }
+          />
+          <Route
+            path="/daftarBeli/beli/:id"
+            element={
+              <BELIRoute>
+                <TampilBeli />
+              </BELIRoute>
+            }
+          />
+          <Route
+            path="/daftarBeli/beli/:id/edit"
+            element={
+              <BELIRoute>
+                <UbahBeli />
+              </BELIRoute>
+            }
+          />
+          <Route
+            path="/daftarBeli/beli/:id/tambahBeliChild"
+            element={
+              <BELIRoute>
+                <TambahBeliChild />
+              </BELIRoute>
+            }
+          />
+          <Route
+            path="/daftarBeli/beli/:id/:idBeliChild"
+            element={
+              <BELIRoute>
+                <TampilBeliChild />
+              </BELIRoute>
+            }
+          />
+          <Route
+            path="/daftarBeli/beli/:id/:idBeliChild/edit"
+            element={
+              <BELIRoute>
+                <UbahBeliChild />
+              </BELIRoute>
             }
           />
         </Routes>

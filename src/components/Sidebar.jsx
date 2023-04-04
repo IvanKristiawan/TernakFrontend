@@ -111,7 +111,7 @@ const Sidebar = ({
           <SubMenu title={"Transaksi"} icon={<FaExchangeAlt />}>
             {user.akses.pembelian === true && (
               <MenuItem>
-                Pembelian <NavLink to="/daftarPembelian" />
+                Pembelian <NavLink to="/daftarBeli" />
               </MenuItem>
             )}
             {user.akses.penjualan === true && (

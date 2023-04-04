@@ -5,20 +5,23 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../../contexts/ContextProvider";
 import { Loader } from "../../../../components";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
-import { Box, Alert, Button, Snackbar } from "@mui/material";
+import { Box, Alert, Button, Snackbar, Typography } from "@mui/material";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import SaveIcon from "@mui/icons-material/Save";
 
-const TambahStok = () => {
+const TambahBeli = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [kodeStok, setKodeStok] = useState("");
-  const [namaStok, setNamaStok] = useState("");
-  const [qtyStok, setQtyStok] = useState("");
-  const [kodeGroupStok, setKodeGroupStok] = useState("");
+  const [noNotaBeli, setNoNotaBeli] = useState("");
+  const [inputTanggalBeli, setInputTanggalBeli] = useState(
+    new Date(user.tutupperiode.dariTanggal)
+  );
+  const [kodeSupplier, setKodeSupplier] = useState("");
 
-  const [groupStoks, setGroupStoks] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -31,20 +34,47 @@ const TambahStok = () => {
   };
 
   useEffect(() => {
-    getGroupStoksData();
+    findDefaultDate();
+    getNextKodeBeli();
+    getSuppliersData();
   }, []);
 
-  const getGroupStoksData = async (kodeUnit) => {
-    setKodeGroupStok("");
-    const response = await axios.post(`${tempUrl}/groupStoks`, {
+  const getSuppliersData = async (kodeUnit) => {
+    setKodeSupplier("");
+    const response = await axios.post(`${tempUrl}/suppliers`, {
       _id: user.id,
       token: user.token
     });
-    setGroupStoks(response.data);
-    setKodeGroupStok(response.data[0].kodeGroupStok);
+    setSuppliers(response.data);
+    setKodeSupplier(response.data[0].kodeSupplier);
   };
 
-  const saveStok = async (e) => {
+  const findDefaultDate = async () => {
+    let newPeriodeAwal = new Date(user.tutupperiode.dariTanggal);
+    let newPeriodeAkhir = new Date(user.tutupperiode.sampaiTanggal);
+    let newToday = new Date();
+
+    let isDateBetween =
+      newToday >= newPeriodeAwal && newToday <= newPeriodeAkhir;
+
+    if (isDateBetween) {
+      // Default Date Today
+      setInputTanggalBeli(new Date());
+    }
+  };
+
+  const getNextKodeBeli = async () => {
+    setLoading(true);
+    const nextKodeBeli = await axios.post(`${tempUrl}/beliNextKode`, {
+      _id: user.id,
+      token: user.token,
+      kodeCabang: user.cabang.id
+    });
+    setNoNotaBeli(nextKodeBeli.data);
+    setLoading(false);
+  };
+
+  const saveBeli = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
@@ -52,19 +82,18 @@ const TambahStok = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/saveStok`, {
-          kodeStok,
-          namaStok,
-          qtyStok: qtyStok.replace(/,/g, ""),
-          kodeGroupStok,
+        await axios.post(`${tempUrl}/saveBeli`, {
+          tanggalBeli: inputTanggalBeli,
+          kodeSupplier,
           userIdInput: user.id,
+          kodeCabang: user.cabang.id,
           _id: user.id,
           token: user.token
         });
         setLoading(false);
-        navigate("/stok");
+        navigate("/daftarBeli");
       } catch (error) {
-        alert(error.response.data.message);
+        alert(error);
       }
       setLoading(false);
     } else {
@@ -82,20 +111,18 @@ const TambahStok = () => {
     textAlign: screenSize >= 650 && "right"
   };
 
-  const textRightSmall = {
-    textAlign: screenSize >= 650 && "right",
-    fontSize: "14px"
-  };
-
   return (
     <Container>
-      <h3>Master</h3>
-      <h5 style={{ fontWeight: 400 }}>Tambah Stok</h5>
+      <h3>Transaksi</h3>
+      <h5 style={{ fontWeight: 400 }}>Tambah Beli</h5>
+      <Typography sx={subTitleText}>
+        Periode : {user.tutupperiode.namaPeriode}
+      </Typography>
       <hr />
       <Card>
-        <Card.Header>Stok</Card.Header>
+        <Card.Header>Beli</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={saveStok}>
+          <Form noValidate validated={validated} onSubmit={saveBeli}>
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -104,15 +131,14 @@ const TambahStok = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Kode :
+                    No. Nota :
                   </Form.Label>
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={kodeStok}
-                      onChange={(e) =>
-                        setKodeStok(e.target.value.toUpperCase())
-                      }
+                      value={noNotaBeli}
+                      disabled
+                      readOnly
                     />
                   </Col>
                 </Form.Group>
@@ -126,49 +152,17 @@ const TambahStok = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Nama :
+                    Tanggal :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control
+                    <DatePicker
                       required
-                      value={namaStok}
-                      onChange={(e) =>
-                        setNamaStok(e.target.value.toUpperCase())
-                      }
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRightSmall}>
-                    Kuantitas :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      required
-                      value={qtyStok}
-                      onChange={(e) => {
-                        let tempNum;
-                        let isNumNan = isNaN(
-                          parseInt(e.target.value.replace(/,/g, ""), 10)
-                        );
-                        if (isNumNan) {
-                          tempNum = "";
-                        } else {
-                          tempNum = parseInt(
-                            e.target.value.replace(/,/g, ""),
-                            10
-                          ).toLocaleString();
-                        }
-                        setQtyStok(tempNum);
-                      }}
+                      dateFormat="dd/MM/yyyy"
+                      selected={inputTanggalBeli}
+                      minDate={new Date(user.tutupperiode.dariTanggal)}
+                      maxDate={new Date(user.tutupperiode.sampaiTanggal)}
+                      customInput={<Form.Control required />}
+                      onChange={(date) => setInputTanggalBeli(date)}
                     />
                   </Col>
                 </Form.Group>
@@ -182,19 +176,19 @@ const TambahStok = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Group Stok :
+                    Supplier :
                   </Form.Label>
                   <Col sm="9">
                     <Form.Select
                       required
-                      value={kodeGroupStok}
+                      value={kodeSupplier}
                       onChange={(e) => {
-                        setKodeGroupStok(e.target.value);
+                        setKodeSupplier(e.target.value);
                       }}
                     >
-                      {groupStoks.map((groupStok, index) => (
-                        <option value={groupStok.kodeGroupStok}>
-                          {groupStok.kodeGroupStok} - {groupStok.namaGroupStok}
+                      {suppliers.map((supplier, index) => (
+                        <option value={supplier.kodeSupplier}>
+                          {supplier.kodeSupplier} - {supplier.namaSupplier}
                         </option>
                       ))}
                     </Form.Select>
@@ -206,7 +200,7 @@ const TambahStok = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate("/stok")}
+                onClick={() => navigate("/daftarBeli")}
                 sx={{ marginRight: 2 }}
               >
                 {"< Kembali"}
@@ -233,7 +227,7 @@ const TambahStok = () => {
   );
 };
 
-export default TambahStok;
+export default TambahBeli;
 
 const spacingTop = {
   mt: 4
@@ -241,4 +235,8 @@ const spacingTop = {
 
 const alertBox = {
   width: "100%"
+};
+
+const subTitleText = {
+  fontWeight: "900"
 };
