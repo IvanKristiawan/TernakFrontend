@@ -33,6 +33,7 @@ const UbahBeliChild = () => {
   const [validated, setValidated] = useState(false);
   const [noNotaBeli, setNoNotaBeli] = useState("");
   const [stok, setStok] = useState("");
+  const [kodeStok, setKodeStok] = useState("");
   const [tanggalBeli, setTanggalBeli] = useState("");
   const [qtyBeliChild, setQtyBeliChild] = useState("");
   const [qtyBeliChildBaru, setQtyBeliChildBaru] = useState("");
@@ -71,6 +72,7 @@ const UbahBeliChild = () => {
     setStok(
       `${pickedBeliChild.data.stok.kodeStok} - ${pickedBeliChild.data.stok.namaStok}`
     );
+    setKodeStok(pickedBeliChild.data.stok.kodeStok);
     let newTanggalBeli = new Date(pickedBeliChild.data.beli.tanggalBeli);
     let tempTanggalBeli = `${newTanggalBeli.getDate().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
@@ -86,7 +88,7 @@ const UbahBeliChild = () => {
     setHargaBeliChildBaru(pickedBeliChild.data.hargaBeliChild.toLocaleString());
     setSubtotalBeliChild(pickedBeliChild.data.subtotalBeliChild);
     setSubtotalBeliChildBaru(
-      pickedBeliChild.data.subtotalBeliChildBaru.toLocaleString()
+      pickedBeliChild.data.subtotalBeliChild.toLocaleString()
     );
     setLoading(false);
   };
@@ -101,6 +103,7 @@ const UbahBeliChild = () => {
         setLoading(true);
         await axios.post(`${tempUrl}/updateBeliChild/${idBeliChild}`, {
           beliId: id,
+          kodeStok,
           qtyBeliChildLama: qtyBeliChild,
           qtyBeliChild: qtyBeliChildBaru.replace(/,/g, ""),
           subtotalBeliChildLama: subtotalBeliChild,
@@ -232,7 +235,8 @@ const UbahBeliChild = () => {
                         setQtyBeliChildBaru(tempNum);
                         setSubtotalBeliChildBaru(
                           (
-                            tempNum.replace(/,/g, "") * hargaBeliChildBaru
+                            tempNum.replace(/,/g, "") *
+                            hargaBeliChildBaru.replace(/,/g, "")
                           ).toLocaleString()
                         );
                       }}
@@ -271,7 +275,8 @@ const UbahBeliChild = () => {
                         setHargaBeliChildBaru(tempNum);
                         setSubtotalBeliChildBaru(
                           (
-                            tempNum.replace(/,/g, "") * qtyBeliChild
+                            tempNum.replace(/,/g, "") *
+                            qtyBeliChildBaru.replace(/,/g, "")
                           ).toLocaleString()
                         );
                       }}
