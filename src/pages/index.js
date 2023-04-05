@@ -54,3 +54,4 @@ export { default as TampilJualChild } from "./Transaksi/Penjualan/JualChild/Tamp
 export { default as UbahJualChild } from "./Transaksi/Penjualan/JualChild/UbahJualChild";
 // Laporan Pembelian
 export { default as LaporanPembelian } from "./Laporan/LaporanPembelian/LaporanPembelian";
+export { default as LaporanPenjualan } from "./Laporan/LaporanPenjualan/LaporanPenjualan";
