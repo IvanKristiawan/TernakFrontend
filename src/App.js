@@ -48,7 +48,8 @@ import {
   TampilJualChild,
   UbahJualChild,
   LaporanPembelian,
-  LaporanPenjualan
+  LaporanPenjualan,
+  LaporanLabaRugi
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -200,6 +201,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.lapPenjualan) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const LAPLABARUGIRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.lapLabaRugi) {
       return children;
     }
 
@@ -655,6 +666,14 @@ const App = () => {
               <LAPPENJUALANRoute>
                 <LaporanPenjualan />
               </LAPPENJUALANRoute>
+            }
+          />
+          <Route
+            path="/laporanLabaRugi"
+            element={
+              <LAPLABARUGIRoute>
+                <LaporanLabaRugi />
+              </LAPLABARUGIRoute>
             }
           />
         </Routes>

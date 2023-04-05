@@ -178,7 +178,7 @@ const UbahUser = () => {
           });
           setLoading(false);
 
-          if (user.id === id) {
+          if (user.id == id) {
             dispatch({ type: "LOGOUT" });
             navigate("/");
           } else {
