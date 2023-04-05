@@ -46,7 +46,8 @@ import {
   UbahJual,
   TambahJualChild,
   TampilJualChild,
-  UbahJualChild
+  UbahJualChild,
+  LaporanPembelian
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -178,6 +179,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.penjualan) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const LAPPEMBELIANRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.lapPembelian) {
       return children;
     }
 
@@ -616,6 +627,14 @@ const App = () => {
               <JUALRoute>
                 <UbahJualChild />
               </JUALRoute>
+            }
+          />
+          <Route
+            path="/laporanPembelian"
+            element={
+              <LAPPEMBELIANRoute>
+                <LaporanPembelian />
+              </LAPPEMBELIANRoute>
             }
           />
         </Routes>

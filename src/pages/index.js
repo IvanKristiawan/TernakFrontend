@@ -52,3 +52,5 @@ export { default as UbahJual } from "./Transaksi/Penjualan/Jual/UbahJual";
 export { default as TambahJualChild } from "./Transaksi/Penjualan/JualChild/TambahJualChild";
 export { default as TampilJualChild } from "./Transaksi/Penjualan/JualChild/TampilJualChild";
 export { default as UbahJualChild } from "./Transaksi/Penjualan/JualChild/UbahJualChild";
+// Laporan Pembelian
+export { default as LaporanPembelian } from "./Laporan/LaporanPembelian/LaporanPembelian";
