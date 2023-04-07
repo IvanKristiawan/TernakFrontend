@@ -17,6 +17,7 @@ const UbahSetting = () => {
   const [alamatPerusahaan, setAlamatPerusahaan] = useState("");
   const [kotaPerusahaan, setKotaPerusahaan] = useState("");
   const [provinsiPerusahaan, setProvinsiPerusahaan] = useState("");
+  const [teleponPerusahaan, setTeleponPerusahaan] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const UbahSetting = () => {
     setAlamatPerusahaan(response.data.alamatPerusahaan);
     setKotaPerusahaan(response.data.kotaPerusahaan);
     setProvinsiPerusahaan(response.data.provinsiPerusahaan);
+    setTeleponPerusahaan(response.data.teleponPerusahaan);
     setLoading(false);
   };
 
@@ -62,6 +64,7 @@ const UbahSetting = () => {
             alamatPerusahaan,
             kotaPerusahaan,
             provinsiPerusahaan,
+            teleponPerusahaan,
             userIdUpdate: user.id,
             _id: user.id,
             token: user.token
@@ -76,7 +79,8 @@ const UbahSetting = () => {
             {
               _id: user.id,
               token: user.token,
-              kodeCabang: user.cabang.id
+              kodeCabang: user.cabang.id,
+              namaPeriode: user.tutupperiode.namaPeriode
             }
           );
           dispatch({
@@ -201,6 +205,28 @@ const UbahSetting = () => {
                       value={provinsiPerusahaan}
                       onChange={(e) =>
                         setProvinsiPerusahaan(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRightSmall}>
+                    Telepon Perusahaan :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      required
+                      value={teleponPerusahaan}
+                      onChange={(e) =>
+                        setTeleponPerusahaan(e.target.value.toUpperCase())
                       }
                     />
                   </Col>

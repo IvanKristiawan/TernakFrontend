@@ -16,6 +16,7 @@ const TampilSetting = () => {
   const [alamatPerusahaan, setAlamatPerusahaan] = useState("");
   const [kotaPerusahaan, setKotaPerusahaan] = useState("");
   const [provinsiPerusahaan, setProvinsiPerusahaan] = useState("");
+  const [teleponPerusahaan, setTeleponPerusahaan] = useState("");
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const TampilSetting = () => {
       setAlamatPerusahaan(response.data.alamatPerusahaan);
       setKotaPerusahaan(response.data.kotaPerusahaan);
       setProvinsiPerusahaan(response.data.provinsiPerusahaan);
+      setTeleponPerusahaan(response.data.teleponPerusahaan);
     } catch (error) {
       alert(error);
     }
@@ -133,6 +135,22 @@ const TampilSetting = () => {
                 </Form.Label>
                 <Col sm="8">
                   <Form.Control value={provinsiPerusahaan} disabled readOnly />
+                </Col>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={6}>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="formPlaintextPassword"
+              >
+                <Form.Label column sm="4" style={textRightSmall}>
+                  Telepon Perusahaan :
+                </Form.Label>
+                <Col sm="8">
+                  <Form.Control value={teleponPerusahaan} disabled readOnly />
                 </Col>
               </Form.Group>
             </Col>

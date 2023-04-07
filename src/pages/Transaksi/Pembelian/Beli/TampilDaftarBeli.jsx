@@ -78,7 +78,7 @@ const TampilDaftarBeli = () => {
   }
 
   return (
-    <Box sx={container}>
+    <Box>
       <Typography color="#757575">Transaksi</Typography>
       <Typography variant="h4" sx={subTitleText}>
         Daftar Beli
@@ -119,10 +119,6 @@ const TampilDaftarBeli = () => {
 };
 
 export default TampilDaftarBeli;
-
-const container = {
-  p: 4
-};
 
 const subTitleText = {
   fontWeight: "900"

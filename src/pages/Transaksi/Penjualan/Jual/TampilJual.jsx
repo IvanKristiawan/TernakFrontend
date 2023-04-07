@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../../contexts/AuthContext";
@@ -6,16 +6,21 @@ import { tempUrl, useStateContext } from "../../../../contexts/ContextProvider";
 import { Loader, usePagination, ButtonModifier } from "../../../../components";
 import { ShowTableJualChild } from "../../../../components/ShowTable";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
-import { Box, Button, Pagination } from "@mui/material";
+import { Box, Button, Pagination, ButtonGroup } from "@mui/material";
+import jsPDF from "jspdf";
+import SearchIcon from "@mui/icons-material/Search";
+import PrintIcon from "@mui/icons-material/Print";
 
 const TampilJual = () => {
   const { screenSize } = useStateContext();
+  const reportTemplateRef = useRef(null);
   const { user, setting } = useContext(AuthContext);
   const [noNotaJual, setNoNotaJual] = useState("");
   const [tanggalJual, setTanggalJual] = useState("");
   const [tanggalJualDate, setTanggalJualDate] = useState();
   const [totalJual, setTotalJual] = useState("");
   const [isPost, setIsPost] = useState("");
+  const [previewPdf, setPreviewPdf] = useState(false);
 
   const [jualsChildData, setJualsChildData] = useState([]);
   const navigate = useNavigate();
@@ -45,6 +50,20 @@ const TampilJual = () => {
   const handleChange = (e, p) => {
     setPage(p);
     _DATA.jump(p);
+  };
+
+  const handleGeneratePdf = () => {
+    const doc = new jsPDF({
+      format: "a4",
+      unit: "px"
+    });
+
+    doc.html(reportTemplateRef.current, {
+      async callback(doc) {
+        await doc.save("StrukJual");
+      },
+      html2canvas: { scale: 0.5 }
+    });
   };
 
   useEffect(() => {
@@ -129,6 +148,57 @@ const TampilJual = () => {
           </>
         )}
       </Box>
+      <Box sx={downloadButtons}>
+        <ButtonGroup variant="outlined" color="secondary">
+          <Button
+            color="primary"
+            startIcon={<SearchIcon />}
+            onClick={() => {
+              setPreviewPdf(!previewPdf);
+            }}
+          >
+            PDF
+          </Button>
+        </ButtonGroup>
+      </Box>
+
+      {previewPdf && (
+        <div>
+          <Button
+            variant="outlined"
+            startIcon={<PrintIcon />}
+            onClick={handleGeneratePdf}
+          >
+            CETAK
+          </Button>
+          <div ref={reportTemplateRef} style={cetakContainer}>
+            <p style={cetakCenter}>{setting.namaPerusahaan}</p>
+            <p style={cetakCenter}>{setting.alamatPerusahaan}</p>
+            <p style={cetakCenter}>({setting.kotaPerusahaan})</p>
+            <p style={cetakCenter}>{setting.provinsiPerusahaan}</p>
+            <p style={cetakCenter}>NO. TELP. {setting.teleponPerusahaan}</p>
+            <hr />
+            <p style={cetakCenter}>STRUK PENJUALAN</p>
+            <p style={cetakCenterBold}>No. Nota {noNotaJual}</p>
+            <p style={cetakCenter}>Tanggal {tanggalJual}</p>
+            <hr />
+            {jualsChildData.map((user, index) => (
+              <>
+                <p style={cetakCenter}> {user.stok.namaStok}</p>
+                <p style={cetakCenter}>
+                  {user.qtyJualChild.toLocaleString()} x{" "}
+                  {user.hargaJualChild.toLocaleString()} |{" "}
+                  {user.subtotalJualChild.toLocaleString()}
+                </p>
+              </>
+            ))}
+            <p style={cetakCenterBold}>
+              Total : Rp {totalJual.toLocaleString()}
+            </p>
+          </div>
+        </div>
+      )}
+
       <Form>
         <Card>
           <Card.Header>Jual</Card.Header>
@@ -228,4 +298,31 @@ const tableContainer = {
   pt: 4,
   display: "flex",
   justifyContent: "center"
+};
+
+const downloadButtons = {
+  mt: 4,
+  mb: 4,
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center"
+};
+
+const cetakContainer = {
+  width: "300px",
+  fontSize: "16px",
+  letterSpacing: "0.01px"
+};
+
+const cetakCenter = {
+  textAlign: "center",
+  marginTop: "0px",
+  marginBottom: "0px"
+};
+
+const cetakCenterBold = {
+  textAlign: "center",
+  marginTop: "0px",
+  marginBottom: "0px",
+  fontWeight: "700"
 };
