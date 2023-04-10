@@ -56,7 +56,7 @@ const TampilDaftarJual = () => {
     setLoading(true);
     try {
       const allJuals = await axios.post(`${tempUrl}/juals`, {
-        tanggalBeli: user.tutupperiode.dariTanggal,
+        dariTanggal: user.tutupperiode.dariTanggal,
         sampaiTanggal: user.tutupperiode.sampaiTanggal,
         _id: user.id,
         token: user.token,

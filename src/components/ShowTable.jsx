@@ -878,3 +878,69 @@ export function ShowTableJualChild({ id, currentPosts }) {
     </TableContainer>
   );
 }
+
+export function ShowTableKematian({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Tanggal
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Qty.
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Stok</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.tanggalKematian.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.qtyKematian.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.stok.kodeStok
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.stok.namaStok
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate(`/kematian/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.tanggalKematian}
+                </TableCell>
+                <TableCell>{user.qtyKematian}</TableCell>
+                <TableCell>{`${user.stok.kodeStok} - ${user.stok.namaStok}`}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

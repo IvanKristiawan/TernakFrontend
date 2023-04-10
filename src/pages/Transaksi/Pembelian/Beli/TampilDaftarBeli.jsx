@@ -56,7 +56,7 @@ const TampilDaftarBeli = () => {
     setLoading(true);
     try {
       const allBelis = await axios.post(`${tempUrl}/belis`, {
-        tanggalBeli: user.tutupperiode.dariTanggal,
+        dariTanggal: user.tutupperiode.dariTanggal,
         sampaiTanggal: user.tutupperiode.sampaiTanggal,
         _id: user.id,
         token: user.token,

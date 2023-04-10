@@ -85,6 +85,9 @@ const Sidebar = ({
                 <MenuItem>
                   Stok <NavLink to="/stok" />
                 </MenuItem>
+                <MenuItem>
+                  Kematian <NavLink to="/kematian" />
+                </MenuItem>
               </SubMenu>
             )}
             {user.akses.perubahan === true && (

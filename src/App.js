@@ -24,6 +24,9 @@ import {
   TampilStok,
   TambahStok,
   UbahStok,
+  TampilKematian,
+  UbahKematian,
+  TambahKematian,
   TampilPerubahan,
   TambahPerubahan,
   UbahPerubahan,
@@ -434,6 +437,39 @@ const App = () => {
             element={
               <STOKRoute>
                 <TambahStok />
+              </STOKRoute>
+            }
+          />
+          {/*  Kematian */}
+          <Route
+            path="/kematian"
+            element={
+              <STOKRoute>
+                <TampilKematian />
+              </STOKRoute>
+            }
+          />
+          <Route
+            path="/kematian/:id"
+            element={
+              <STOKRoute>
+                <TampilKematian />
+              </STOKRoute>
+            }
+          />
+          <Route
+            path="/kematian/:id/edit"
+            element={
+              <STOKRoute>
+                <UbahKematian />
+              </STOKRoute>
+            }
+          />
+          <Route
+            path="/kematian/tambahKematian"
+            element={
+              <STOKRoute>
+                <TambahKematian />
               </STOKRoute>
             }
           />

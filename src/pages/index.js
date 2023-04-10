@@ -24,6 +24,10 @@ export { default as UbahGroupStok } from "./Master/Stok/GroupStok/UbahGroupStok"
 export { default as TampilStok } from "./Master/Stok/Stok/TampilStok";
 export { default as TambahStok } from "./Master/Stok/Stok/TambahStok";
 export { default as UbahStok } from "./Master/Stok/Stok/UbahStok";
+// Kematian Page
+export { default as TampilKematian } from "./Master/Stok/Kematian/TampilKematian";
+export { default as TambahKematian } from "./Master/Stok/Kematian/TambahKematian";
+export { default as UbahKematian } from "./Master/Stok/Kematian/UbahKematian";
 // Perubahan Page
 export { default as TampilPerubahan } from "./Master/Perubahan/TampilPerubahan";
 export { default as TambahPerubahan } from "./Master/Perubahan/TambahPerubahan";
