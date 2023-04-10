@@ -96,7 +96,7 @@ const LaporanLabaRugi = () => {
         <tr style={tableTextBorder}>
           <td style={{ fontWeight: 700 }}>{lapPenjualansData[keys[i]].nama}</td>
           <td style={textTableRight}>
-            {lapPenjualansData[keys[i]].jumlah.toLocaleString()}
+            {lapPenjualansData[keys[i]].jumlah.toLocaleString("en-US")}
           </td>
         </tr>
       );
@@ -105,7 +105,7 @@ const LaporanLabaRugi = () => {
         <tr style={tableText}>
           <td style={{ fontWeight: 700 }}>{lapPenjualansData[keys[i]].nama}</td>
           <td style={textTableRight}>
-            {lapPenjualansData[keys[i]].jumlah.toLocaleString()}
+            {lapPenjualansData[keys[i]].jumlah.toLocaleString("en-US")}
           </td>
         </tr>
       );

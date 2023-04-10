@@ -64,12 +64,16 @@ const UbahJualChild = () => {
     })}-${newTanggalJual.getFullYear()}`;
     setTanggalJual(tempTanggalJual);
     setQtyJualChild(pickedJualChild.data.qtyJualChild);
-    setQtyJualChildBaru(pickedJualChild.data.qtyJualChild.toLocaleString());
+    setQtyJualChildBaru(
+      pickedJualChild.data.qtyJualChild.toLocaleString("en-US")
+    );
     setHargaJualChild(pickedJualChild.data.hargaJualChild);
-    setHargaJualChildBaru(pickedJualChild.data.hargaJualChild.toLocaleString());
+    setHargaJualChildBaru(
+      pickedJualChild.data.hargaJualChild.toLocaleString("en-US")
+    );
     setSubtotalJualChild(pickedJualChild.data.subtotalJualChild);
     setSubtotalJualChildBaru(
-      pickedJualChild.data.subtotalJualChild.toLocaleString()
+      pickedJualChild.data.subtotalJualChild.toLocaleString("en-US")
     );
     setLoading(false);
   };
@@ -211,14 +215,14 @@ const UbahJualChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setQtyJualChildBaru(tempNum);
                         setSubtotalJualChildBaru(
                           (
                             tempNum.replace(/,/g, "") *
                             hargaJualChildBaru.replace(/,/g, "")
-                          ).toLocaleString()
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />
@@ -251,14 +255,14 @@ const UbahJualChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setHargaJualChildBaru(tempNum);
                         setSubtotalJualChildBaru(
                           (
                             tempNum.replace(/,/g, "") *
                             qtyJualChildBaru.replace(/,/g, "")
-                          ).toLocaleString()
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />

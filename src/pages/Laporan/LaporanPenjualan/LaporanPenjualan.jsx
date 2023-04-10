@@ -154,13 +154,19 @@ const LaporanPenjualan = () => {
                 groupBy[keysSubGroup[j]][k].stok.namaStok
               }`}</td>
               <td style={textTableRight}>
-                {groupBy[keysSubGroup[j]][k].qtyJualChild.toLocaleString()}
+                {groupBy[keysSubGroup[j]][k].qtyJualChild.toLocaleString(
+                  "en-US"
+                )}
               </td>
               <td style={textTableRight}>
-                {groupBy[keysSubGroup[j]][k].hargaJualChild.toLocaleString()}
+                {groupBy[keysSubGroup[j]][k].hargaJualChild.toLocaleString(
+                  "en-US"
+                )}
               </td>
               <td style={textTableRight}>
-                {groupBy[keysSubGroup[j]][k].subtotalJualChild.toLocaleString()}
+                {groupBy[keysSubGroup[j]][k].subtotalJualChild.toLocaleString(
+                  "en-US"
+                )}
               </td>
             </tr>
           );
@@ -170,13 +176,15 @@ const LaporanPenjualan = () => {
             <td style={{ fontWeight: 700 }} colspan="3">
               Total {lapPenjualansData[keys[i]][0].groupStok} :
             </td>
-            <td style={textTableRight}>{totalQty.toLocaleString()}</td>
+            <td style={textTableRight}>{totalQty.toLocaleString("en-US")}</td>
             <td style={textTableRight}>
               {`Avg. ${(
                 totalHarga / groupBy[keysSubGroup[j]].length
-              ).toLocaleString()}`}
+              ).toLocaleString("en-US")}`}
             </td>
-            <td style={textTableRight}>{totalSubTotal.toLocaleString()}</td>
+            <td style={textTableRight}>
+              {totalSubTotal.toLocaleString("en-US")}
+            </td>
           </tr>
         );
         totalQty = 0;

@@ -222,13 +222,14 @@ const TambahBeliChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setQtyBeliChild(tempNum);
                         setSubtotalBeliChild(
                           (
-                            tempNum.replace(/,/g, "") * hargaBeliChild
-                          ).toLocaleString()
+                            tempNum.replace(/,/g, "") *
+                            hargaBeliChild.replace(/,/g, "")
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />
@@ -261,13 +262,14 @@ const TambahBeliChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setHargaBeliChild(tempNum);
                         setSubtotalBeliChild(
                           (
-                            tempNum.replace(/,/g, "") * qtyBeliChild
-                          ).toLocaleString()
+                            tempNum.replace(/,/g, "") *
+                            qtyBeliChild.replace(/,/g, "")
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />

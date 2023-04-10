@@ -676,7 +676,7 @@ export function ShowTableDaftarBeli({ currentPosts, searchTerm }) {
                 </TableCell>
                 <TableCell>{user.tanggalBeli}</TableCell>
                 <TableCell align="right">
-                  {user.totalBeli.toLocaleString()}
+                  {user.totalBeli.toLocaleString("en-US")}
                 </TableCell>
               </TableRow>
             ))}
@@ -733,13 +733,13 @@ export function ShowTableBeliChild({ id, currentPosts }) {
                   {`${user.stok.kodeStok} - ${user.stok.namaStok}`}
                 </TableCell>
                 <TableCell align="right">
-                  {user.qtyBeliChild.toLocaleString()}
+                  {user.qtyBeliChild.toLocaleString("en-US")}
                 </TableCell>
                 <TableCell align="right">
-                  {user.hargaBeliChild.toLocaleString()}
+                  {user.hargaBeliChild.toLocaleString("en-US")}
                 </TableCell>
                 <TableCell align="right">
-                  {user.subtotalBeliChild.toLocaleString()}
+                  {user.subtotalBeliChild.toLocaleString("en-US")}
                 </TableCell>
               </TableRow>
             );
@@ -805,7 +805,7 @@ export function ShowTableDaftarJual({ currentPosts, searchTerm }) {
                 </TableCell>
                 <TableCell>{user.tanggalJual}</TableCell>
                 <TableCell align="right">
-                  {user.totalJual.toLocaleString()}
+                  {user.totalJual.toLocaleString("en-US")}
                 </TableCell>
               </TableRow>
             ))}
@@ -862,13 +862,13 @@ export function ShowTableJualChild({ id, currentPosts }) {
                   {`${user.stok.kodeStok} - ${user.stok.namaStok}`}
                 </TableCell>
                 <TableCell align="right">
-                  {user.qtyJualChild.toLocaleString()}
+                  {user.qtyJualChild.toLocaleString("en-US")}
                 </TableCell>
                 <TableCell align="right">
-                  {user.hargaJualChild.toLocaleString()}
+                  {user.hargaJualChild.toLocaleString("en-US")}
                 </TableCell>
                 <TableCell align="right">
-                  {user.subtotalJualChild.toLocaleString()}
+                  {user.subtotalJualChild.toLocaleString("en-US")}
                 </TableCell>
               </TableRow>
             );

@@ -218,13 +218,14 @@ const TambahJualChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setQtyJualChild(tempNum);
                         setSubtotalJualChild(
                           (
-                            tempNum.replace(/,/g, "") * hargaJualChild
-                          ).toLocaleString()
+                            tempNum.replace(/,/g, "") *
+                            hargaJualChild.replace(/,/g, "")
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />
@@ -257,13 +258,14 @@ const TambahJualChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setHargaJualChild(tempNum);
                         setSubtotalJualChild(
                           (
-                            tempNum.replace(/,/g, "") * qtyJualChild
-                          ).toLocaleString()
+                            tempNum.replace(/,/g, "") *
+                            qtyJualChild.replace(/,/g, "")
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />

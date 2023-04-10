@@ -46,7 +46,7 @@ const UbahStok = () => {
     setKodeStok(response.data.kodeStok);
     setKodeStokLama(response.data.kodeStok);
     setNamaStok(response.data.namaStok);
-    setQtyStok(response.data.qtyStok.toLocaleString());
+    setQtyStok(response.data.qtyStok.toLocaleString("en-US"));
     setKodeGroupStok(response.data.groupstok.kodeGroupStok);
     setLoading(false);
   };
@@ -187,7 +187,7 @@ const UbahStok = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setQtyStok(tempNum);
                       }}

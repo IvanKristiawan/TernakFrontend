@@ -165,7 +165,7 @@ const TambahStok = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setQtyStok(tempNum);
                       }}

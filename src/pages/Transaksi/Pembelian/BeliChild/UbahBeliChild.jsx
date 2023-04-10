@@ -64,12 +64,16 @@ const UbahBeliChild = () => {
     })}-${newTanggalBeli.getFullYear()}`;
     setTanggalBeli(tempTanggalBeli);
     setQtyBeliChild(pickedBeliChild.data.qtyBeliChild);
-    setQtyBeliChildBaru(pickedBeliChild.data.qtyBeliChild.toLocaleString());
+    setQtyBeliChildBaru(
+      pickedBeliChild.data.qtyBeliChild.toLocaleString("en-US")
+    );
     setHargaBeliChild(pickedBeliChild.data.hargaBeliChild);
-    setHargaBeliChildBaru(pickedBeliChild.data.hargaBeliChild.toLocaleString());
+    setHargaBeliChildBaru(
+      pickedBeliChild.data.hargaBeliChild.toLocaleString("en-US")
+    );
     setSubtotalBeliChild(pickedBeliChild.data.subtotalBeliChild);
     setSubtotalBeliChildBaru(
-      pickedBeliChild.data.subtotalBeliChild.toLocaleString()
+      pickedBeliChild.data.subtotalBeliChild.toLocaleString("en-US")
     );
     setLoading(false);
   };
@@ -211,14 +215,14 @@ const UbahBeliChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setQtyBeliChildBaru(tempNum);
                         setSubtotalBeliChildBaru(
                           (
                             tempNum.replace(/,/g, "") *
                             hargaBeliChildBaru.replace(/,/g, "")
-                          ).toLocaleString()
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />
@@ -251,14 +255,14 @@ const UbahBeliChild = () => {
                           tempNum = parseInt(
                             e.target.value.replace(/,/g, ""),
                             10
-                          ).toLocaleString();
+                          ).toLocaleString("en-US");
                         }
                         setHargaBeliChildBaru(tempNum);
                         setSubtotalBeliChildBaru(
                           (
                             tempNum.replace(/,/g, "") *
                             qtyBeliChildBaru.replace(/,/g, "")
-                          ).toLocaleString()
+                          ).toLocaleString("en-US")
                         );
                       }}
                     />
