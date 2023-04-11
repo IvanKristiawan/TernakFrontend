@@ -36,13 +36,11 @@ const UbahBeli = () => {
   }, []);
 
   const getSuppliersData = async (kodeUnit) => {
-    setKodeSupplier("");
     const response = await axios.post(`${tempUrl}/suppliers`, {
       _id: user.id,
       token: user.token
     });
     setSuppliers(response.data);
-    setKodeSupplier(response.data[0].kodeSupplier);
   };
 
   const getBeliById = async () => {
@@ -61,6 +59,7 @@ const UbahBeli = () => {
       useGrouping: false
     })}-${newTanggalBeli.getFullYear()}`;
     setInputTanggalBeli(tempTanggalBeli);
+    setKodeSupplier(pickedBeli.data.supplier.kodeSupplier);
     setLoading(false);
   };
 

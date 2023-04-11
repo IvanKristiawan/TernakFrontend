@@ -19,7 +19,9 @@ const TambahJual = () => {
   const [inputTanggalJual, setInputTanggalJual] = useState(
     new Date(user.tutupperiode.dariTanggal)
   );
+  const [kodeCustomer, setKodeCustomer] = useState("");
 
+  const [customers, setCustomers] = useState([]);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -34,7 +36,18 @@ const TambahJual = () => {
   useEffect(() => {
     findDefaultDate();
     getNextKodeJual();
+    getCustomersData();
   }, []);
+
+  const getCustomersData = async (kodeUnit) => {
+    setKodeCustomer("");
+    const response = await axios.post(`${tempUrl}/customers`, {
+      _id: user.id,
+      token: user.token
+    });
+    setCustomers(response.data);
+    setKodeCustomer(response.data[0].kodeCustomer);
+  };
 
   const findDefaultDate = async () => {
     let newPeriodeAwal = new Date(user.tutupperiode.dariTanggal);
@@ -71,6 +84,7 @@ const TambahJual = () => {
         setLoading(true);
         await axios.post(`${tempUrl}/saveJual`, {
           tanggalJual: inputTanggalJual,
+          kodeCustomer,
           userIdInput: user.id,
           kodeCabang: user.cabang.id,
           _id: user.id,
@@ -150,6 +164,34 @@ const TambahJual = () => {
                       customInput={<Form.Control required />}
                       onChange={(date) => setInputTanggalJual(date)}
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Customer :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Select
+                      required
+                      value={kodeCustomer}
+                      onChange={(e) => {
+                        setKodeCustomer(e.target.value);
+                      }}
+                    >
+                      {customers.map((customer, index) => (
+                        <option value={customer.kodeCustomer}>
+                          {customer.kodeCustomer} - {customer.namaCustomer}
+                        </option>
+                      ))}
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>

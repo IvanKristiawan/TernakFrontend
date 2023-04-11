@@ -19,6 +19,7 @@ const TampilJual = () => {
   const [tanggalJual, setTanggalJual] = useState("");
   const [tanggalJualDate, setTanggalJualDate] = useState();
   const [totalJual, setTotalJual] = useState("");
+  const [kodeCustomer, setKodeCustomer] = useState("");
   const [isPost, setIsPost] = useState("");
   const [previewPdf, setPreviewPdf] = useState(false);
 
@@ -89,6 +90,9 @@ const TampilJual = () => {
     setTanggalJualDate(new Date(response.data.tanggalJual));
     setIsPost(response.data.isPost);
     setTotalJual(response.data.totalJual);
+    setKodeCustomer(
+      `${response.data.customer.kodeCustomer} - ${response.data.customer.namaCustomer}`
+    );
     const response2 = await axios.post(`${tempUrl}/jualsChildByJual`, {
       jualId: response.data.id,
       kodeCabang: user.cabang.id,
@@ -241,6 +245,22 @@ const TampilJual = () => {
                       disabled
                       readOnly
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Customer :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control value={kodeCustomer} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>

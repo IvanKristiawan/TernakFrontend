@@ -15,7 +15,9 @@ const UbahJual = () => {
   const [validated, setValidated] = useState(false);
   const [noNotaJual, setNoNotaJual] = useState("");
   const [inputTanggalJual, setInputTanggalJual] = useState("");
+  const [kodeCustomer, setKodeCustomer] = useState("");
 
+  const [customers, setCustomers] = useState([]);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,7 +32,16 @@ const UbahJual = () => {
 
   useEffect(() => {
     getJualById();
+    getCustomersData();
   }, []);
+
+  const getCustomersData = async (kodeUnit) => {
+    const response = await axios.post(`${tempUrl}/customers`, {
+      _id: user.id,
+      token: user.token
+    });
+    setCustomers(response.data);
+  };
 
   const getJualById = async () => {
     setLoading(true);
@@ -48,6 +59,7 @@ const UbahJual = () => {
       useGrouping: false
     })}-${newTanggalJual.getFullYear()}`;
     setInputTanggalJual(tempTanggalJual);
+    setKodeCustomer(pickedJual.data.customer.kodeCustomer);
     setLoading(false);
   };
 
@@ -135,6 +147,34 @@ const UbahJual = () => {
                       disabled
                       readOnly
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Customer :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Select
+                      required
+                      value={kodeCustomer}
+                      onChange={(e) => {
+                        setKodeCustomer(e.target.value);
+                      }}
+                    >
+                      {customers.map((customer, index) => (
+                        <option value={customer.kodeCustomer}>
+                          {customer.kodeCustomer} - {customer.namaCustomer}
+                        </option>
+                      ))}
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
