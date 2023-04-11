@@ -149,6 +149,11 @@ const Sidebar = ({
                 Laba Rugi <NavLink to="/laporanLabaRugi" />
               </MenuItem>
             )}
+            {user.akses.lapKematian === true && (
+              <MenuItem>
+                Kematian <NavLink to="/laporanKematian" />
+              </MenuItem>
+            )}
           </SubMenu>
           <SubMenu title={"Utility"} icon={<FaUserCog />}>
             {user.akses.profilUser === true && (

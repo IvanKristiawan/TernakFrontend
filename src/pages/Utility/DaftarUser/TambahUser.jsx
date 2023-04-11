@@ -45,6 +45,7 @@ const TambahUser = () => {
   const [lapStok, setLapStok] = useState(false);
   const [lapPerubahanStok, setLapPerubahanStok] = useState(false);
   const [lapLabaRugi, setLapLabaRugi] = useState(false);
+  const [lapKematian, setLapKematian] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -133,6 +134,7 @@ const TambahUser = () => {
               lapStok,
               lapPerubahanStok,
               lapLabaRugi,
+              lapKematian,
               profilUser,
               daftarUser,
               setting: settingAkses
@@ -396,9 +398,17 @@ const TambahUser = () => {
                   <Form>
                     <Form.Check
                       type="checkbox"
-                      label="LabaRugi"
+                      label="Laba Rugi"
                       checked={lapLabaRugi}
                       onChange={() => setLapLabaRugi(!lapLabaRugi)}
+                    />
+                  </Form>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Lap. Kematian"
+                      checked={lapKematian}
+                      onChange={() => setLapKematian(!lapKematian)}
                     />
                   </Form>
                   <p style={secondCheckboxTitle}>Utility</p>

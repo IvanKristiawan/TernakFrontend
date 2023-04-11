@@ -49,6 +49,7 @@ const DaftarUser = () => {
   const [lapStok, setLapStok] = useState(false);
   const [lapPerubahanStok, setLapPerubahanStok] = useState(false);
   const [lapLabaRugi, setLapLabaRugi] = useState(false);
+  const [lapKematian, setLapKematian] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -147,6 +148,7 @@ const DaftarUser = () => {
       setLapStok(response.data.akses.lapStok);
       setLapPerubahanStok(response.data.akses.lapPerubahanStok);
       setLapLabaRugi(response.data.akses.lapLabaRugi);
+      setLapKematian(response.data.akses.lapKematian);
 
       // Akses Utility
       setProfilUser(response.data.akses.profilUser);
@@ -500,6 +502,14 @@ const DaftarUser = () => {
                       label="Laba Rugi"
                       disabled
                       checked={lapLabaRugi}
+                    />
+                  </Form>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Lap. Kematian"
+                      disabled
+                      checked={lapKematian}
                     />
                   </Form>
                   <p style={secondCheckboxTitle}>Utility</p>

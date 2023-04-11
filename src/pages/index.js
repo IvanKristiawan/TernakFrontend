@@ -60,3 +60,4 @@ export { default as UbahJualChild } from "./Transaksi/Penjualan/JualChild/UbahJu
 export { default as LaporanPembelian } from "./Laporan/LaporanPembelian/LaporanPembelian";
 export { default as LaporanPenjualan } from "./Laporan/LaporanPenjualan/LaporanPenjualan";
 export { default as LaporanLabaRugi } from "./Laporan/LaporanLabaRugi/LaporanLabaRugi";
+export { default as LaporanKematian } from "./Laporan/LaporanKematian/LaporanKematian";
