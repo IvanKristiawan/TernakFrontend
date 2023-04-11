@@ -143,7 +143,7 @@ const LaporanKematian = () => {
           list.push(
             <tr style={tableText}>
               <td style={{ paddingLeft: "15px" }}>
-                {groupBy[keysSubGroup[j]][k].tanggalJual}
+                {groupBy[keysSubGroup[j]][k].tanggalKematian}
               </td>
               <td>{`${groupBy[keysSubGroup[j]][k].stok.kodeStok} - ${
                 groupBy[keysSubGroup[j]][k].stok.namaStok
@@ -300,7 +300,11 @@ const LaporanKematian = () => {
                     required
                     value={stokId}
                     onChange={(e) => {
-                      setStokId(e.target.value);
+                      if (e.target.value === "SEMUA") {
+                        setStokId("");
+                      } else {
+                        setStokId(e.target.value);
+                      }
                       setPreviewPdf(false);
                     }}
                   >

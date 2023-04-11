@@ -15,6 +15,7 @@ const TambahJualChild = () => {
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
   const [noNotaJual, setNoNotaJual] = useState("");
+  const [customerId, setCustomerId] = useState("");
   const [tanggalJual, setTanggalJual] = useState("");
   const [tanggalJualDate, setTanggalJualDate] = useState("");
   const [qtyJualChild, setQtyJualChild] = useState("");
@@ -57,6 +58,7 @@ const TambahJualChild = () => {
       kodeCabang: user.cabang.id
     });
     setNoNotaJual(pickedJual.data.noNotaJual);
+    setCustomerId(pickedJual.data.customerId);
     let newTanggalJual = new Date(pickedJual.data.tanggalJual);
     let tempTanggalJual = `${newTanggalJual.getDate().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
@@ -85,6 +87,7 @@ const TambahJualChild = () => {
           subtotalJualChild: subtotalJualChild.replace(/,/g, ""),
           jualId: id,
           kodeStok,
+          customerId,
           userIdInput: user.id,
           kodeCabang: user.cabang.id,
           _id: user.id,

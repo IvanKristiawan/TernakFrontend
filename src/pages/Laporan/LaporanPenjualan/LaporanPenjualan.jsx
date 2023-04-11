@@ -32,9 +32,11 @@ const LaporanPenjualan = () => {
   );
   const [kodeCabang, setKodeCabang] = useState(user.cabang.id);
   const [stokId, setStokId] = useState("");
+  const [customerId, setCustomerId] = useState("");
   const [grouping, setGrouping] = useState("STOK");
 
   const [stoks, setStoks] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [cabangs, setCabangs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [lapPenjualansData, setLapPenjualansData] = useState([]);
@@ -64,6 +66,7 @@ const LaporanPenjualan = () => {
     const form = e.currentTarget;
     if (form.checkValidity()) {
       let lapPembelians = await axios.post(`${tempUrl}/laporanPenjualan`, {
+        customerId: customerId.split(" -", 1)[0],
         kodeStok: stokId.split(" -", 1)[0],
         grouping,
         dariTanggal,
@@ -80,6 +83,7 @@ const LaporanPenjualan = () => {
   useEffect(() => {
     getStoksData();
     getCabangsData();
+    getCustomersData();
   }, []);
 
   const getStoksData = async () => {
@@ -90,6 +94,16 @@ const LaporanPenjualan = () => {
       kodeCabang: user.cabang.id
     });
     setStoks(response.data);
+  };
+
+  const getCustomersData = async () => {
+    setCustomerId("");
+    const response = await axios.post(`${tempUrl}/customers`, {
+      _id: user.id,
+      token: user.token,
+      kodeCabang: user.cabang.id
+    });
+    setCustomers(response.data);
   };
 
   const getCabangsData = async () => {
@@ -325,7 +339,11 @@ const LaporanPenjualan = () => {
                     required
                     value={stokId}
                     onChange={(e) => {
-                      setStokId(e.target.value);
+                      if (e.target.value === "SEMUA") {
+                        setStokId("");
+                      } else {
+                        setStokId(e.target.value);
+                      }
                       setPreviewPdf(false);
                     }}
                   >
@@ -333,6 +351,42 @@ const LaporanPenjualan = () => {
                     {stoks.map((stok, index) => (
                       <option value={`${stok.kodeStok} - ${stok.namaStok}`}>
                         {stok.kodeStok} - {stok.namaStok}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={6}>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="formPlaintextPassword"
+              >
+                <Form.Label column sm="4" style={textRight}>
+                  Customer :
+                </Form.Label>
+                <Col sm="8">
+                  <Form.Select
+                    required
+                    value={customerId}
+                    onChange={(e) => {
+                      if (e.target.value === "SEMUA") {
+                        setCustomerId("");
+                      } else {
+                        setCustomerId(e.target.value);
+                      }
+                      setPreviewPdf(false);
+                    }}
+                  >
+                    <option value={null}>SEMUA</option>
+                    {customers.map((customer, index) => (
+                      <option
+                        value={`${customer.kodeCustomer} - ${customer.namaCustomer}`}
+                      >
+                        {customer.namaCustomer}
                       </option>
                     ))}
                   </Form.Select>
@@ -408,6 +462,7 @@ const LaporanPenjualan = () => {
                 useGrouping: false
               })}-${sampaiTanggal.getFullYear()}`}
             </p>
+            <p>Customer : {customerId}</p>
             <p>Stok : {stokId}</p>
             <p>Grouping : {grouping}</p>
             <p></p>
