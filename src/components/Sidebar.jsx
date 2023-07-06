@@ -8,7 +8,7 @@ import {
   SubMenu,
   SidebarHeader,
   SidebarFooter,
-  SidebarContent
+  SidebarContent,
 } from "react-pro-sidebar";
 import {
   FaAngleDoubleLeft,
@@ -19,7 +19,7 @@ import {
   FaDochub,
   FaFileInvoiceDollar,
   FaClipboardList,
-  FaExchangeAlt
+  FaExchangeAlt,
 } from "react-icons/fa";
 
 const Sidebar = ({
@@ -27,7 +27,7 @@ const Sidebar = ({
   collapsed,
   toggled,
   handleToggleSidebar,
-  handleCollapsedChange
+  handleCollapsedChange,
 }) => {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const Sidebar = ({
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   fontSize: 15,
-                  letterSpacing: "1px"
+                  letterSpacing: "1px",
                 }}
               >
                 Gadai TechKu
@@ -84,9 +84,6 @@ const Sidebar = ({
                 </MenuItem>
                 <MenuItem>
                   Stok <NavLink to="/stok" />
-                </MenuItem>
-                <MenuItem>
-                  Kematian <NavLink to="/kematian" />
                 </MenuItem>
               </SubMenu>
             )}
@@ -120,6 +117,11 @@ const Sidebar = ({
             {user.akses.penjualan === true && (
               <MenuItem>
                 Penjualan <NavLink to="/daftarJual" />
+              </MenuItem>
+            )}
+            {user.akses.kematian === true && (
+              <MenuItem>
+                Kematian <NavLink to="/kematian" />
               </MenuItem>
             )}
           </SubMenu>
@@ -164,17 +166,6 @@ const Sidebar = ({
             {user.akses.daftarUser === true && (
               <MenuItem>
                 Daftar User <NavLink to="/daftarUser" />
-              </MenuItem>
-            )}
-            {user.akses.tutupPeriode === true && (
-              <MenuItem>
-                Tutup Periode
-                <NavLink to="/tutupPeriode" />
-              </MenuItem>
-            )}
-            {user.akses.gantiPeriode === true && (
-              <MenuItem>
-                Ganti Periode <NavLink to="/gantiPeriode" />
               </MenuItem>
             )}
             {user.akses.setting === true && (

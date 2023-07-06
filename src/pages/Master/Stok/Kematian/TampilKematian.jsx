@@ -82,8 +82,6 @@ const TampilKematian = () => {
     setLoading(true);
     try {
       const response = await axios.post(`${tempUrl}/kematians`, {
-        dariTanggal: user.tutupperiode.dariTanggal,
-        sampaiTanggal: user.tutupperiode.sampaiTanggal,
         _id: user.id,
         token: user.token,
         kodeCabang: user.cabang.id
@@ -211,9 +209,6 @@ const TampilKematian = () => {
     <Container>
       <h3>Master</h3>
       <h5 style={{ fontWeight: 400 }}>Daftar Kematian</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <Box sx={downloadButtons}>
         <ButtonGroup variant="outlined" color="secondary">
           <Button

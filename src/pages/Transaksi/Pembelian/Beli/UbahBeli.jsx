@@ -38,7 +38,7 @@ const UbahBeli = () => {
   const getSuppliersData = async (kodeUnit) => {
     const response = await axios.post(`${tempUrl}/suppliers`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setSuppliers(response.data);
   };
@@ -47,16 +47,16 @@ const UbahBeli = () => {
     setLoading(true);
     const pickedBeli = await axios.post(`${tempUrl}/belis/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setNoNotaBeli(pickedBeli.data.noNotaBeli);
     let newTanggalBeli = new Date(pickedBeli.data.tanggalBeli);
     let tempTanggalBeli = `${newTanggalBeli.getDate().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-      useGrouping: false
+      useGrouping: false,
     })}-${(newTanggalBeli.getMonth() + 1).toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-      useGrouping: false
+      useGrouping: false,
     })}-${newTanggalBeli.getFullYear()}`;
     setInputTanggalBeli(tempTanggalBeli);
     setKodeSupplier(pickedBeli.data.supplier.kodeSupplier);
@@ -75,7 +75,7 @@ const UbahBeli = () => {
           kodeSupplier,
           userIdUpdate: user.id,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
         setLoading(false);
         navigate(`/daftarBeli/beli/${id}`);
@@ -95,16 +95,13 @@ const UbahBeli = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
     <Container>
       <h3>Transaksi</h3>
       <h5 style={{ fontWeight: 400 }}>Ubah Beli</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <hr />
       <Card>
         <Card.Header>Beli</Card.Header>
@@ -214,25 +211,25 @@ const UbahBeli = () => {
 export default UbahBeli;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };
 
 const dialogContainer = {
   display: "flex",
   flexDirection: "column",
   padding: 4,
-  width: "800px"
+  width: "800px",
 };
 
 const dialogWrapper = {
   width: "100%",
-  marginTop: 2
+  marginTop: 2,
 };

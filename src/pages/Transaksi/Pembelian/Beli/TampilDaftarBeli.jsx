@@ -56,8 +56,6 @@ const TampilDaftarBeli = () => {
     setLoading(true);
     try {
       const allBelis = await axios.post(`${tempUrl}/belis`, {
-        dariTanggal: user.tutupperiode.dariTanggal,
-        sampaiTanggal: user.tutupperiode.sampaiTanggal,
         _id: user.id,
         token: user.token,
         kodeCabang: user.cabang.id
@@ -82,9 +80,6 @@ const TampilDaftarBeli = () => {
       <Typography color="#757575">Transaksi</Typography>
       <Typography variant="h4" sx={subTitleText}>
         Daftar Beli
-      </Typography>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
       </Typography>
       <Box sx={buttonModifierContainer}>
         <ButtonModifier

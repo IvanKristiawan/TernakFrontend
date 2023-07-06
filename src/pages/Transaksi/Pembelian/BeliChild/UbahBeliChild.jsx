@@ -124,9 +124,6 @@ const UbahBeliChild = () => {
     <Container>
       <h3>Transaksi</h3>
       <h5 style={{ fontWeight: 400 }}>Ubah Detail Beli</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <hr />
       <Card>
         <Card.Header>Detail Beli</Card.Header>

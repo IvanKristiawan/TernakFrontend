@@ -39,7 +39,7 @@ const UbahSetting = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/settings/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setNamaPerusahaan(response.data.namaPerusahaan);
     setAlamatPerusahaan(response.data.alamatPerusahaan);
@@ -67,26 +67,21 @@ const UbahSetting = () => {
             teleponPerusahaan,
             userIdUpdate: user.id,
             _id: user.id,
-            token: user.token
+            token: user.token,
+          });
+          const res = await axios.post(`${tempUrl}/auth/login`, {
+            username: user.username,
+            password: user.password,
           });
           const findSetting = await axios.post(`${tempUrl}/lastSetting`, {
-            _id: user.id,
-            token: user.token,
-            kodeCabang: user.cabang.id
+            _id: res.data.details.id,
+            token: res.data.details.token,
+            kodeCabang: res.data.details.cabangId,
           });
-          const gantiPeriodeUser = await axios.post(
-            `${tempUrl}/updateUserThenLogin/${user.id}`,
-            {
-              _id: user.id,
-              token: user.token,
-              kodeCabang: user.cabang.id,
-              namaPeriode: user.tutupperiode.namaPeriode
-            }
-          );
           dispatch({
             type: "LOGIN_SUCCESS",
-            payload: gantiPeriodeUser.data.details,
-            setting: findSetting.data
+            payload: res.data.details,
+            setting: findSetting.data,
           });
           setLoading(false);
           navigate(`/setting`);
@@ -106,12 +101,12 @@ const UbahSetting = () => {
   };
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   const textRightSmall = {
     textAlign: screenSize >= 650 && "right",
-    fontSize: "14px"
+    fontSize: "14px",
   };
 
   if (loading) {
@@ -268,5 +263,5 @@ const UbahSetting = () => {
 export default UbahSetting;
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };

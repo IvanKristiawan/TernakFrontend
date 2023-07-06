@@ -16,9 +16,7 @@ const TambahBeli = () => {
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
   const [noNotaBeli, setNoNotaBeli] = useState("");
-  const [inputTanggalBeli, setInputTanggalBeli] = useState(
-    new Date(user.tutupperiode.dariTanggal)
-  );
+  const [inputTanggalBeli, setInputTanggalBeli] = useState(new Date());
   const [kodeSupplier, setKodeSupplier] = useState("");
 
   const [suppliers, setSuppliers] = useState([]);
@@ -34,7 +32,6 @@ const TambahBeli = () => {
   };
 
   useEffect(() => {
-    findDefaultDate();
     getNextKodeBeli();
     getSuppliersData();
   }, []);
@@ -43,24 +40,10 @@ const TambahBeli = () => {
     setKodeSupplier("");
     const response = await axios.post(`${tempUrl}/suppliers`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setSuppliers(response.data);
     setKodeSupplier(response.data[0].kodeSupplier);
-  };
-
-  const findDefaultDate = async () => {
-    let newPeriodeAwal = new Date(user.tutupperiode.dariTanggal);
-    let newPeriodeAkhir = new Date(user.tutupperiode.sampaiTanggal);
-    let newToday = new Date();
-
-    let isDateBetween =
-      newToday >= newPeriodeAwal && newToday <= newPeriodeAkhir;
-
-    if (isDateBetween) {
-      // Default Date Today
-      setInputTanggalBeli(new Date());
-    }
   };
 
   const getNextKodeBeli = async () => {
@@ -68,7 +51,7 @@ const TambahBeli = () => {
     const nextKodeBeli = await axios.post(`${tempUrl}/beliNextKode`, {
       _id: user.id,
       token: user.token,
-      kodeCabang: user.cabang.id
+      kodeCabang: user.cabang.id,
     });
     setNoNotaBeli(nextKodeBeli.data);
     setLoading(false);
@@ -88,7 +71,7 @@ const TambahBeli = () => {
           userIdInput: user.id,
           kodeCabang: user.cabang.id,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
         setLoading(false);
         navigate("/daftarBeli");
@@ -108,16 +91,13 @@ const TambahBeli = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
     <Container>
       <h3>Transaksi</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Beli</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <hr />
       <Card>
         <Card.Header>Beli</Card.Header>
@@ -159,8 +139,6 @@ const TambahBeli = () => {
                       required
                       dateFormat="dd/MM/yyyy"
                       selected={inputTanggalBeli}
-                      minDate={new Date(user.tutupperiode.dariTanggal)}
-                      maxDate={new Date(user.tutupperiode.sampaiTanggal)}
                       customInput={<Form.Control required />}
                       onChange={(date) => setInputTanggalBeli(date)}
                     />
@@ -230,13 +208,13 @@ const TambahBeli = () => {
 export default TambahBeli;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };

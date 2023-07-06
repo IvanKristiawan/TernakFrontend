@@ -190,14 +190,14 @@ const TampilJual = () => {
               <>
                 <p style={cetakCenter}> {user.stok.namaStok}</p>
                 <p style={cetakCenter}>
-                  {user.qtyJualChild.toLocaleString()} x{" "}
-                  {user.hargaJualChild.toLocaleString()} |{" "}
-                  {user.subtotalJualChild.toLocaleString()}
+                  {user.qtyJualChild.toLocaleString("en-US")} x{" "}
+                  {user.hargaJualChild.toLocaleString("en-US")} |{" "}
+                  {user.subtotalJualChild.toLocaleString("en-US")}
                 </p>
               </>
             ))}
             <p style={cetakCenterBold}>
-              Total : Rp {totalJual.toLocaleString()}
+              Total : Rp {totalJual.toLocaleString("en-US")}
             </p>
           </div>
         </div>
@@ -277,7 +277,7 @@ const TampilJual = () => {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
-                      value={totalJual.toLocaleString()}
+                      value={totalJual.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />

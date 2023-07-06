@@ -268,7 +268,7 @@ const TampilJualChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={qtyJualChild.toLocaleString()}
+                      value={qtyJualChild.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />
@@ -289,7 +289,7 @@ const TampilJualChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={hargaJualChild.toLocaleString()}
+                      value={hargaJualChild.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />
@@ -310,7 +310,7 @@ const TampilJualChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={subtotalJualChild.toLocaleString()}
+                      value={subtotalJualChild.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />

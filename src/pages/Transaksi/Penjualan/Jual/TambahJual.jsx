@@ -16,9 +16,7 @@ const TambahJual = () => {
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
   const [noNotaJual, setNoNotaJual] = useState("");
-  const [inputTanggalJual, setInputTanggalJual] = useState(
-    new Date(user.tutupperiode.dariTanggal)
-  );
+  const [inputTanggalJual, setInputTanggalJual] = useState(new Date());
   const [kodeCustomer, setKodeCustomer] = useState("");
 
   const [customers, setCustomers] = useState([]);
@@ -34,7 +32,6 @@ const TambahJual = () => {
   };
 
   useEffect(() => {
-    findDefaultDate();
     getNextKodeJual();
     getCustomersData();
   }, []);
@@ -43,24 +40,10 @@ const TambahJual = () => {
     setKodeCustomer("");
     const response = await axios.post(`${tempUrl}/customers`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setCustomers(response.data);
     setKodeCustomer(response.data[0].kodeCustomer);
-  };
-
-  const findDefaultDate = async () => {
-    let newPeriodeAwal = new Date(user.tutupperiode.dariTanggal);
-    let newPeriodeAkhir = new Date(user.tutupperiode.sampaiTanggal);
-    let newToday = new Date();
-
-    let isDateBetween =
-      newToday >= newPeriodeAwal && newToday <= newPeriodeAkhir;
-
-    if (isDateBetween) {
-      // Default Date Today
-      setInputTanggalJual(new Date());
-    }
   };
 
   const getNextKodeJual = async () => {
@@ -68,7 +51,7 @@ const TambahJual = () => {
     const nextKodeJual = await axios.post(`${tempUrl}/jualNextKode`, {
       _id: user.id,
       token: user.token,
-      kodeCabang: user.cabang.id
+      kodeCabang: user.cabang.id,
     });
     setNoNotaJual(nextKodeJual.data);
     setLoading(false);
@@ -88,7 +71,7 @@ const TambahJual = () => {
           userIdInput: user.id,
           kodeCabang: user.cabang.id,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
         setLoading(false);
         navigate("/daftarJual");
@@ -108,16 +91,13 @@ const TambahJual = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
     <Container>
       <h3>Transaksi</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Jual</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <hr />
       <Card>
         <Card.Header>Jual</Card.Header>
@@ -159,8 +139,6 @@ const TambahJual = () => {
                       required
                       dateFormat="dd/MM/yyyy"
                       selected={inputTanggalJual}
-                      minDate={new Date(user.tutupperiode.dariTanggal)}
-                      maxDate={new Date(user.tutupperiode.sampaiTanggal)}
                       customInput={<Form.Control required />}
                       onChange={(date) => setInputTanggalJual(date)}
                     />
@@ -230,13 +208,13 @@ const TambahJual = () => {
 export default TambahJual;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };

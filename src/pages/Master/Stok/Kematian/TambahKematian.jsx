@@ -16,7 +16,7 @@ const TambahKematian = () => {
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
   const [inputTanggalKematian, setInputTanggalKematian] = useState(
-    new Date(user.tutupperiode.dariTanggal)
+    new Date()
   );
   const [qtyKematian, setQtyKematian] = useState("");
   const [kodeStok, setKodeStok] = useState("");
@@ -34,7 +34,6 @@ const TambahKematian = () => {
   };
 
   useEffect(() => {
-    findDefaultDate();
     getStoksData();
   }, []);
 
@@ -46,20 +45,6 @@ const TambahKematian = () => {
     });
     setStoks(response.data);
     setKodeStok(response.data[0].kodeStok);
-  };
-
-  const findDefaultDate = async () => {
-    let newPeriodeAwal = new Date(user.tutupperiode.dariTanggal);
-    let newPeriodeAkhir = new Date(user.tutupperiode.sampaiTanggal);
-    let newToday = new Date();
-
-    let isDateBetween =
-      newToday >= newPeriodeAwal && newToday <= newPeriodeAkhir;
-
-    if (isDateBetween) {
-      // Default Date Today
-      setInputTanggalKematian(new Date());
-    }
   };
 
   const saveKematian = async (e) => {
@@ -104,9 +89,6 @@ const TambahKematian = () => {
     <Container>
       <h3>Master</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Kematian</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <hr />
       <Card>
         <Card.Header>Kematian</Card.Header>
@@ -127,8 +109,6 @@ const TambahKematian = () => {
                       required
                       dateFormat="dd/MM/yyyy"
                       selected={inputTanggalKematian}
-                      minDate={new Date(user.tutupperiode.dariTanggal)}
-                      maxDate={new Date(user.tutupperiode.sampaiTanggal)}
                       customInput={<Form.Control required />}
                       onChange={(date) => setInputTanggalKematian(date)}
                     />

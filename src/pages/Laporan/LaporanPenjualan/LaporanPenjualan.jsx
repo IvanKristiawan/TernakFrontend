@@ -10,7 +10,7 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
-  FormLabel
+  FormLabel,
 } from "@mui/material";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -24,12 +24,8 @@ const LaporanPenjualan = () => {
   const { user, setting } = useContext(AuthContext);
   const reportTemplateRef = useRef(null);
   let nowDate = new Date();
-  let [dariTanggal, setDariTanggal] = useState(
-    new Date(user.tutupperiode.dariTanggal)
-  );
-  let [sampaiTanggal, setSampaiTanggal] = useState(
-    new Date(user.tutupperiode.sampaiTanggal)
-  );
+  let [dariTanggal, setDariTanggal] = useState(new Date());
+  let [sampaiTanggal, setSampaiTanggal] = useState(new Date());
   const [kodeCabang, setKodeCabang] = useState(user.cabang.id);
   const [stokId, setStokId] = useState("");
   const [customerId, setCustomerId] = useState("");
@@ -50,13 +46,13 @@ const LaporanPenjualan = () => {
   const handleGeneratePdf = () => {
     const doc = new jsPDF({
       format: "a4",
-      unit: "px"
+      unit: "px",
     });
     doc.html(reportTemplateRef.current, {
       async callback(doc) {
         await doc.save("LaporanPenjualan");
       },
-      html2canvas: { scale: 0.44 }
+      html2canvas: { scale: 0.44 },
     });
   };
 
@@ -73,7 +69,7 @@ const LaporanPenjualan = () => {
         sampaiTanggal,
         _id: user.id,
         token: user.token,
-        kodeCabang: user.cabang.id
+        kodeCabang: user.cabang.id,
       });
       setLapPenjualansData(lapPembelians.data);
       setPreviewPdf(!previewPdf);
@@ -91,7 +87,7 @@ const LaporanPenjualan = () => {
     const response = await axios.post(`${tempUrl}/stoks`, {
       _id: user.id,
       token: user.token,
-      kodeCabang: user.cabang.id
+      kodeCabang: user.cabang.id,
     });
     setStoks(response.data);
   };
@@ -101,7 +97,7 @@ const LaporanPenjualan = () => {
     const response = await axios.post(`${tempUrl}/customers`, {
       _id: user.id,
       token: user.token,
-      kodeCabang: user.cabang.id
+      kodeCabang: user.cabang.id,
     });
     setCustomers(response.data);
   };
@@ -110,23 +106,23 @@ const LaporanPenjualan = () => {
     const response = await axios.post(`${tempUrl}/cabangs`, {
       _id: user.id,
       token: user.token,
-      kodeCabang: user.cabang.id
+      kodeCabang: user.cabang.id,
     });
     setCabangs(response.data);
   };
 
   const tableText = {
-    letterSpacing: "0.01px"
+    letterSpacing: "0.01px",
   };
 
   const textTableRight = {
     letterSpacing: "0.01px",
-    textAlign: "right"
+    textAlign: "right",
   };
 
   const tableLastText = {
     borderTop: "1px solid black",
-    letterSpacing: "0.01px"
+    letterSpacing: "0.01px",
   };
 
   const list = [];
@@ -209,7 +205,7 @@ const LaporanPenjualan = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   if (loading) {
@@ -425,18 +421,18 @@ const LaporanPenjualan = () => {
               Dicetak Oleh: {user.username} | Tanggal:
               {` ${nowDate.getDate().toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${(nowDate.getMonth() + 1).toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${nowDate.getFullYear()} `}{" "}
               | Jam:{" "}
               {` ${nowDate.getHours().toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${(nowDate.getMinutes() + 1).toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${nowDate.getSeconds()} `}
             </p>
             <h5 style={{ textAlign: "center", fontWeight: "700" }}>
@@ -446,20 +442,20 @@ const LaporanPenjualan = () => {
               Dari Tanggal :
               {` ${dariTanggal.getDate().toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${(dariTanggal.getMonth() + 1).toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${dariTanggal.getFullYear()}`}
             </p>
             <p>
               Sampai Tanggal :
               {` ${sampaiTanggal.getDate().toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${(sampaiTanggal.getMonth() + 1).toLocaleString("en-US", {
                 minimumIntegerDigits: 2,
-                useGrouping: false
+                useGrouping: false,
               })}-${sampaiTanggal.getFullYear()}`}
             </p>
             <p>Customer : {customerId}</p>
@@ -489,21 +485,21 @@ const LaporanPenjualan = () => {
 export default LaporanPenjualan;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const pdfContainer = {
   padding: "10px",
-  letterSpacing: "0.01px"
+  letterSpacing: "0.01px",
 };
 
 const tableTitle = {
   border: "1px solid black",
-  padding: "10px"
+  padding: "10px",
 };
 
 const tableTitleRight = {
   border: "1px solid black",
   padding: "10px",
-  textAlign: "right"
+  textAlign: "right",
 };

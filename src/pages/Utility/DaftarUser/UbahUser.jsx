@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -31,7 +31,6 @@ const UbahUser = () => {
 
   // Akses Master
   const [stok, setStok] = useState(false);
-  const [perubahan, setPerubahan] = useState(false);
   const [supplier, setSupplier] = useState(false);
   const [customer, setCustomer] = useState(false);
   const [cabang, setCabang] = useState(false);
@@ -39,12 +38,13 @@ const UbahUser = () => {
   // Akses Transaksi
   const [pembelian, setPembelian] = useState(false);
   const [penjualan, setPenjualan] = useState(false);
+  const [kematian, setKematian] = useState(false);
 
   // Laporan
   const [lapPembelian, setLapPembelian] = useState(false);
   const [lapPenjualan, setLapPenjualan] = useState(false);
   const [lapStok, setLapStok] = useState(false);
-  const [lapPerubahanStok, setLapPerubahanStok] = useState(false);
+  const [lapKematianStok, setLapKematianStok] = useState(false);
   const [lapLabaRugi, setLapLabaRugi] = useState(false);
   const [lapKematian, setLapKematian] = useState(false);
 
@@ -86,7 +86,7 @@ const UbahUser = () => {
   const getCabangsData = async (kodeUnit) => {
     const response = await axios.post(`${tempUrl}/cabangs`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setCabangs(response.data);
   };
@@ -95,7 +95,7 @@ const UbahUser = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/findUser/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setUsername(response.data.username);
     setUsernameLama(response.data.username);
@@ -104,7 +104,6 @@ const UbahUser = () => {
 
     // Akses Master
     setStok(response.data.akses.stok);
-    setPerubahan(response.data.akses.perubahan);
     setSupplier(response.data.akses.supplier);
     setCustomer(response.data.akses.customer);
     setCabang(response.data.akses.cabang);
@@ -113,12 +112,13 @@ const UbahUser = () => {
     // Akses Transaksi
     setPembelian(response.data.akses.pembelian);
     setPenjualan(response.data.akses.penjualan);
+    setKematian(response.data.akses.kematian);
 
     // Akses Laporan
     setLapPembelian(response.data.akses.lapPembelian);
     setLapPenjualan(response.data.akses.lapPenjualan);
     setLapStok(response.data.akses.lapStok);
-    setLapPerubahanStok(response.data.akses.lapPerubahanStok);
+    setLapKematianStok(response.data.akses.lapKematianStok);
     setLapLabaRugi(response.data.akses.lapLabaRugi);
     setLapKematian(response.data.akses.lapKematian);
 
@@ -141,7 +141,7 @@ const UbahUser = () => {
           username,
           _id: user.id,
           token: user.token,
-          kodeCabang: user.cabang.id
+          kodeCabang: user.cabang.id,
         });
         let isUsernameNotValid =
           tempUsername.data.length > 0 && username !== usernameLama;
@@ -159,25 +159,25 @@ const UbahUser = () => {
             tipeAdmin: user.tipeUser,
             akses: {
               stok,
-              perubahan,
               supplier,
               customer,
               cabang,
               pembelian,
               penjualan,
+              kematian,
               lapPembelian,
               lapPenjualan,
               lapStok,
-              lapPerubahanStok,
+              lapKematianStok,
               lapLabaRugi,
               lapKematian,
               profilUser,
               daftarUser,
-              setting: settingAkses
+              setting: settingAkses,
             },
             cabangId: kodeCabang,
             _id: user.id,
-            token: user.token
+            token: user.token,
           });
           setLoading(false);
 
@@ -200,12 +200,12 @@ const UbahUser = () => {
   };
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   const textRightSmall = {
     textAlign: screenSize >= 650 && "right",
-    fontSize: "14px"
+    fontSize: "14px",
   };
 
   if (loading) {
@@ -361,12 +361,6 @@ const UbahUser = () => {
                     />
                     <Form.Check
                       type="checkbox"
-                      label="Perubahan"
-                      checked={perubahan}
-                      onChange={() => setPerubahan(!perubahan)}
-                    />
-                    <Form.Check
-                      type="checkbox"
                       label="Supplier"
                       checked={supplier}
                       onChange={() => setSupplier(!supplier)}
@@ -401,6 +395,14 @@ const UbahUser = () => {
                       onChange={() => setPenjualan(!penjualan)}
                     />
                   </Form>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Kematian"
+                      checked={kematian}
+                      onChange={() => setKematian(!kematian)}
+                    />
+                  </Form>
                 </Box>
                 <Box sx={[showDataWrapper, secondWrapper]}>
                   <p style={secondCheckboxTitle}>Laporan</p>
@@ -431,9 +433,9 @@ const UbahUser = () => {
                   <Form>
                     <Form.Check
                       type="checkbox"
-                      label="Perubahan Stok"
-                      checked={lapPerubahanStok}
-                      onChange={() => setLapPerubahanStok(!lapPerubahanStok)}
+                      label="Kematian Stok"
+                      checked={lapKematianStok}
+                      onChange={() => setLapKematianStok(!lapKematianStok)}
                     />
                   </Form>
                   <Form>
@@ -514,8 +516,8 @@ const showDataContainer = {
   display: "flex",
   flexDirection: {
     xs: "column",
-    sm: "row"
-  }
+    sm: "row",
+  },
 };
 
 const showDataWrapper = {
@@ -523,33 +525,33 @@ const showDataWrapper = {
   flex: 1,
   flexDirection: "column",
   maxWidth: {
-    md: "40vw"
-  }
+    md: "40vw",
+  },
 };
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
 
 const secondWrapper = {
   marginLeft: {
-    sm: 4
+    sm: 4,
   },
   marginTop: {
     sm: 0,
-    xs: 4
-  }
+    xs: 4,
+  },
 };
 
 const checkboxTitle = {
-  marginBottom: 0
+  marginBottom: 0,
 };
 
 const secondCheckboxTitle = {
   marginTop: 15,
-  marginBottom: 0
+  marginBottom: 0,
 };

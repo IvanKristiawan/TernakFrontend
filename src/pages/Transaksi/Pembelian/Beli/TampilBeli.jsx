@@ -207,7 +207,7 @@ const TampilBeli = () => {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
-                      value={totalBeli.toLocaleString()}
+                      value={totalBeli.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />

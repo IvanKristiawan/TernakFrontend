@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -30,7 +30,6 @@ const TambahUser = () => {
 
   // Akses Master
   const [stok, setStok] = useState(false);
-  const [perubahan, setPerubahan] = useState(false);
   const [supplier, setSupplier] = useState(false);
   const [customer, setCustomer] = useState(false);
   const [cabang, setCabang] = useState(false);
@@ -38,12 +37,13 @@ const TambahUser = () => {
   // Akses Transaksi
   const [pembelian, setPembelian] = useState(false);
   const [penjualan, setPenjualan] = useState(false);
+  const [kematian, setKematian] = useState(false);
 
   // Akses Laporan
   const [lapPembelian, setLapPembelian] = useState(false);
   const [lapPenjualan, setLapPenjualan] = useState(false);
   const [lapStok, setLapStok] = useState(false);
-  const [lapPerubahanStok, setLapPerubahanStok] = useState(false);
+  const [lapKematianStok, setLapKematianStok] = useState(false);
   const [lapLabaRugi, setLapLabaRugi] = useState(false);
   const [lapKematian, setLapKematian] = useState(false);
 
@@ -84,7 +84,7 @@ const TambahUser = () => {
     setKodeCabang("");
     const response = await axios.post(`${tempUrl}/cabangs`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setCabangs(response.data);
     if (user.tipeUser === "OWNER") {
@@ -109,7 +109,7 @@ const TambahUser = () => {
         let tempUsername = await axios.post(`${tempUrl}/getUsername`, {
           username,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
 
         let isUsernameAlreadyExist = tempUsername.data.length > 0;
@@ -123,25 +123,25 @@ const TambahUser = () => {
             tipeUser,
             akses: {
               stok,
-              perubahan,
               supplier,
               customer,
               cabang,
               pembelian,
               penjualan,
+              kematian,
               lapPembelian,
               lapPenjualan,
               lapStok,
-              lapPerubahanStok,
+              lapKematianStok,
               lapLabaRugi,
               lapKematian,
               profilUser,
               daftarUser,
-              setting: settingAkses
+              setting: settingAkses,
             },
             cabangId: kodeCabang,
             _id: user.id,
-            token: user.token
+            token: user.token,
           });
           setLoading(false);
           navigate("/daftarUser");
@@ -162,12 +162,12 @@ const TambahUser = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   const textRightSmall = {
     textAlign: screenSize >= 650 && "right",
-    fontSize: "14px"
+    fontSize: "14px",
   };
 
   return (
@@ -320,12 +320,6 @@ const TambahUser = () => {
                     />
                     <Form.Check
                       type="checkbox"
-                      label="Perubahan"
-                      checked={perubahan}
-                      onChange={() => setPerubahan(!perubahan)}
-                    />
-                    <Form.Check
-                      type="checkbox"
                       label="Supplier"
                       checked={supplier}
                       onChange={() => setSupplier(!supplier)}
@@ -359,6 +353,14 @@ const TambahUser = () => {
                         onChange={() => setPenjualan(!penjualan)}
                       />
                     </Form>
+                    <Form>
+                      <Form.Check
+                        type="checkbox"
+                        label="Kematian"
+                        checked={kematian}
+                        onChange={() => setKematian(!kematian)}
+                      />
+                    </Form>
                   </Form>
                 </Box>
                 <Box sx={[showDataWrapper, secondWrapper]}>
@@ -390,9 +392,9 @@ const TambahUser = () => {
                   <Form>
                     <Form.Check
                       type="checkbox"
-                      label="Perubahan Stok"
-                      checked={lapPerubahanStok}
-                      onChange={() => setLapPerubahanStok(!lapPerubahanStok)}
+                      label="Kematian Stok"
+                      checked={lapKematianStok}
+                      onChange={() => setLapKematianStok(!lapKematianStok)}
                     />
                   </Form>
                   <Form>
@@ -469,11 +471,11 @@ const TambahUser = () => {
 export default TambahUser;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
 
 const showDataContainer = {
@@ -481,8 +483,8 @@ const showDataContainer = {
   display: "flex",
   flexDirection: {
     xs: "column",
-    sm: "row"
-  }
+    sm: "row",
+  },
 };
 
 const showDataWrapper = {
@@ -490,25 +492,25 @@ const showDataWrapper = {
   flex: 1,
   flexDirection: "column",
   maxWidth: {
-    md: "40vw"
-  }
+    md: "40vw",
+  },
 };
 
 const secondWrapper = {
   marginLeft: {
-    sm: 4
+    sm: 4,
   },
   marginTop: {
     sm: 0,
-    xs: 4
-  }
+    xs: 4,
+  },
 };
 
 const checkboxTitle = {
-  marginBottom: 0
+  marginBottom: 0,
 };
 
 const secondCheckboxTitle = {
   marginTop: 15,
-  marginBottom: 0
+  marginBottom: 0,
 };

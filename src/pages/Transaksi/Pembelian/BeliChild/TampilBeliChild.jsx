@@ -268,7 +268,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={qtyBeliChild.toLocaleString()}
+                      value={qtyBeliChild.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />
@@ -289,7 +289,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={hargaBeliChild.toLocaleString()}
+                      value={hargaBeliChild.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />
@@ -310,7 +310,7 @@ const TampilBeliChild = () => {
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={subtotalBeliChild.toLocaleString()}
+                      value={subtotalBeliChild.toLocaleString("en-US")}
                       disabled
                       readOnly
                     />

@@ -96,9 +96,6 @@ const UbahKematian = () => {
     <Container>
       <h3>Master</h3>
       <h5 style={{ fontWeight: 400 }}>Ubah Kematian</h5>
-      <Typography sx={subTitleText}>
-        Periode : {user.tutupperiode.namaPeriode}
-      </Typography>
       <hr />
       <Card>
         <Card.Header>Kematian</Card.Header>
