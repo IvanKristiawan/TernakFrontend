@@ -56,14 +56,14 @@ const TampilJual = () => {
   const handleGeneratePdf = () => {
     const doc = new jsPDF({
       format: "a4",
-      unit: "px"
+      unit: "px",
     });
 
     doc.html(reportTemplateRef.current, {
       async callback(doc) {
         await doc.save("StrukJual");
       },
-      html2canvas: { scale: 0.5 }
+      html2canvas: { scale: 0.5 },
     });
   };
 
@@ -75,16 +75,16 @@ const TampilJual = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/juals/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setNoNotaJual(response.data.noNotaJual);
     let newTanggalJual = new Date(response.data.tanggalJual);
     let tempTanggalJual = `${newTanggalJual.getDate().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-      useGrouping: false
+      useGrouping: false,
     })}-${(newTanggalJual.getMonth() + 1).toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-      useGrouping: false
+      useGrouping: false,
     })}-${newTanggalJual.getFullYear()}`;
     setTanggalJual(tempTanggalJual);
     setTanggalJualDate(new Date(response.data.tanggalJual));
@@ -97,7 +97,7 @@ const TampilJual = () => {
       jualId: response.data.id,
       kodeCabang: user.cabang.id,
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setJualsChildData(response2.data);
     setLoading(false);
@@ -108,7 +108,7 @@ const TampilJual = () => {
     try {
       await axios.post(`${tempUrl}/deleteJual/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       navigate("/daftarJual");
     } catch (error) {
@@ -122,7 +122,7 @@ const TampilJual = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
@@ -145,6 +145,7 @@ const TampilJual = () => {
               id={id}
               kode={"test"}
               addLink={`/daftarJual/jual/${id}/tambahJualChild`}
+              nameAddButton={"Tambah Barang"}
               editLink={`/daftarJual/jual/${id}/edit`}
               deleteUser={deleteJual}
               nameUser={noNotaJual}
@@ -311,13 +312,13 @@ const buttonModifierContainer = {
   mb: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const downloadButtons = {
@@ -325,24 +326,24 @@ const downloadButtons = {
   mb: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const cetakContainer = {
   width: "300px",
   fontSize: "16px",
-  letterSpacing: "0.01px"
+  letterSpacing: "0.01px",
 };
 
 const cetakCenter = {
   textAlign: "center",
   marginTop: "0px",
-  marginBottom: "0px"
+  marginBottom: "0px",
 };
 
 const cetakCenterBold = {
   textAlign: "center",
   marginTop: "0px",
   marginBottom: "0px",
-  fontWeight: "700"
+  fontWeight: "700",
 };

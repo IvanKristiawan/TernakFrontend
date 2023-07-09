@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../../contexts/ContextProvider";
 import { ShowTableDaftarJual } from "../../../../components/ShowTable";
@@ -8,13 +9,15 @@ import {
   SearchBar,
   Loader,
   usePagination,
-  ButtonModifier
+  ButtonModifier,
 } from "../../../../components";
-import { Box, Typography, Divider, Pagination } from "@mui/material";
+import { Box, Typography, Divider, Pagination, Button } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const TampilDaftarJual = () => {
   const { user } = useContext(AuthContext);
   const { screenSize } = useStateContext();
+  let navigate = useNavigate();
   const [isFetchError, setIsFetchError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [jualsData, setJualsData] = useState([]);
@@ -58,7 +61,7 @@ const TampilDaftarJual = () => {
       const allJuals = await axios.post(`${tempUrl}/juals`, {
         _id: user.id,
         token: user.token,
-        kodeCabang: user.cabang.id
+        kodeCabang: user.cabang.id,
       });
       setJualsData(allJuals.data);
     } catch (err) {
@@ -82,13 +85,18 @@ const TampilDaftarJual = () => {
         Daftar Jual
       </Typography>
       <Box sx={buttonModifierContainer}>
-        <ButtonModifier
-          id={"/"}
-          kode={kode}
-          addLink={`/daftarJual/jual/tambahJual`}
-          editLink={`/`}
-          deleteUser={"/"}
-        />
+        <Button
+          variant="contained"
+          color="success"
+          sx={{ bgcolor: "success.light", textTransform: "none" }}
+          startIcon={<AddCircleOutlineIcon />}
+          size="small"
+          onClick={() => {
+            navigate(`/daftarJual/jual/tambahJual`);
+          }}
+        >
+          Tambah Nota
+        </Button>
       </Box>
       <Divider sx={dividerStyle} />
       <Box sx={searchBarContainer}>
@@ -116,28 +124,28 @@ const TampilDaftarJual = () => {
 export default TampilDaftarJual;
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };
 
 const buttonModifierContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const dividerStyle = {
-  pt: 4
+  pt: 4,
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };

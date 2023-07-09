@@ -56,16 +56,16 @@ const TampilBeli = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/belis/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setNoNotaBeli(response.data.noNotaBeli);
     let newTanggalBeli = new Date(response.data.tanggalBeli);
     let tempTanggalBeli = `${newTanggalBeli.getDate().toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-      useGrouping: false
+      useGrouping: false,
     })}-${(newTanggalBeli.getMonth() + 1).toLocaleString("en-US", {
       minimumIntegerDigits: 2,
-      useGrouping: false
+      useGrouping: false,
     })}-${newTanggalBeli.getFullYear()}`;
     setTanggalBeli(tempTanggalBeli);
     setTanggalBeliDate(new Date(response.data.tanggalBeli));
@@ -78,7 +78,7 @@ const TampilBeli = () => {
       beliId: response.data.id,
       kodeCabang: user.cabang.id,
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setBelisChildData(response2.data);
     setLoading(false);
@@ -89,7 +89,7 @@ const TampilBeli = () => {
     try {
       await axios.post(`${tempUrl}/deleteBeli/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       navigate("/daftarBeli");
     } catch (error) {
@@ -103,7 +103,7 @@ const TampilBeli = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
@@ -126,6 +126,7 @@ const TampilBeli = () => {
               id={id}
               kode={"test"}
               addLink={`/daftarBeli/beli/${id}/tambahBeliChild`}
+              nameAddButton={"Tambah Barang"}
               editLink={`/daftarBeli/beli/${id}/edit`}
               deleteUser={deleteBeli}
               nameUser={noNotaBeli}
@@ -241,11 +242,11 @@ const buttonModifierContainer = {
   mb: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };

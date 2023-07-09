@@ -65,7 +65,7 @@ const TambahBeli = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/saveBeli`, {
+        let savedBeli = await axios.post(`${tempUrl}/saveBeli`, {
           tanggalBeli: inputTanggalBeli,
           kodeSupplier,
           userIdInput: user.id,
@@ -74,7 +74,7 @@ const TambahBeli = () => {
           token: user.token,
         });
         setLoading(false);
-        navigate("/daftarBeli");
+        navigate(`/daftarBeli/beli/${savedBeli.data.id}`);
       } catch (error) {
         alert(error);
       }

@@ -67,7 +67,7 @@ const Sidebar = ({
                   letterSpacing: "1px",
                 }}
               >
-                Gadai TechKu
+                Ternak
               </div>
             </MenuItem>
           )}

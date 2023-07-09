@@ -65,7 +65,7 @@ const TambahJual = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/saveJual`, {
+        let savedJual = await axios.post(`${tempUrl}/saveJual`, {
           tanggalJual: inputTanggalJual,
           kodeCustomer,
           userIdInput: user.id,
@@ -74,7 +74,7 @@ const TambahJual = () => {
           token: user.token,
         });
         setLoading(false);
-        navigate("/daftarJual");
+        navigate(`/daftarJual/jual/${savedJual.data.id}`);
       } catch (error) {
         alert(error);
       }

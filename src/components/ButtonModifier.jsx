@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,9 +17,10 @@ const ButtonModifier = ({
   id,
   kode,
   addLink,
+  nameAddButton,
   editLink,
   deleteUser,
-  nameUser
+  nameUser,
 }) => {
   let navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ const ButtonModifier = ({
             navigate(addLink);
           }}
         >
-          Tambah
+          {nameAddButton ? nameAddButton : "Tambah"}
         </Button>
         {kode && (
           <>
